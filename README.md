@@ -1,2 +1,3 @@
 # Jupyter
- Examples using Pandas, Numpy, Matplotlib.
+ 1-)This Repository includes Examples/implementations of data mining algorithms using Pandas, Numpy, Matplotlib, scikit-learn.
+ 2-) ...
