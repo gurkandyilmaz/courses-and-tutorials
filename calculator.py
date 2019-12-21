@@ -14,7 +14,7 @@ def take_input():
     condition = True
     regex_numbers_operations = re.compile(r"\d+[\+\-\/\*]*")
     regex_operations_faulty = re.compile(r"[\+\-\*\/]{2,}")
-    regex_invalid = re.compile(r"[a-zA-Z]|[\+\-\*\/]{2,}")
+    regex_invalid = re.compile(r"[a-zA-Z]|[\+\-\*\/]{2,}|[\)\(]")
 
     while condition:
         user_input = input("Start typing ('q' to exit): ")
@@ -43,6 +43,8 @@ def take_input():
             else:
                 # Check the in-validity of the input
                 if len(invalid_input) !=0:
+                    if "(" in invalid_input or ")" in invalid_input:
+                        print("DO NOT USE Parentheses!")
                     print("INVALID INPUT!!\n")
                     continue
                     
@@ -92,3 +94,4 @@ def do_operation(number_pairs,oper_type):
 
 if __name__ == "__main__": 
     take_input()
+
