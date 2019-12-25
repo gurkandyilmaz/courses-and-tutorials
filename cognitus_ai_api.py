@@ -1,4 +1,4 @@
-import requests,time,re,json,csv
+import requests,time,json,csv
 
 class Cognitus():
     
@@ -16,6 +16,9 @@ class Cognitus():
         
         self.module_id_sınıflandırma_ = 3832
         self.module_id_duygu_ = 383455
+        
+        head_line = ["text","1.Sınıf", "1.Sınıf-Probability","2.Sınıf", "2.Sınıf-Probability","3.Sınıf", "3.Sınıf-Probability"]
+        self.yeni_liste = [head_line]
 
     
     def check_status(self):
@@ -51,9 +54,9 @@ class Cognitus():
             girdi = input("Sınıflandırmak istenilen metni giriniz(Dosyadan okumak için 'r' ye basın): ")
             
             if girdi.lower() == "r":
-                sorgular = self._read_csv()
-                for i in range(1,len(sorgular)):
-                    self._make_body("sınıflandırma", sorgular[i], module_id)
+                self.sorgular = self._read_csv()
+                for i in range(1,len(self.sorgular)):
+                    self._make_body("sınıflandırma", self.sorgular[i], module_id)
             else:
                 text = girdi
                 self._make_body("sınıflandırma", text, module_id)
@@ -112,6 +115,8 @@ class Cognitus():
             sıralı = self._sort_results(response.json(), "sınıflandırma")
             self._write_results("sınıflandırma", body, response, sıralı)
             
+            self._write_excel(body, sıralı)
+            
             
         elif servis == "duygu":
             print("POST request işlemi yapılıyor...")
@@ -169,5 +174,31 @@ class Cognitus():
                     file.write(f"\t{k+1}. Sınıf: {sıralı[k]['category']}, Probability:{sıralı[k]['probability']}\n")
                 file.write("\n\n")
                 
+                       
+    def _write_excel(self, body, sıralı):
+        
+
+        r = self.sorgular.index(body["text"])
+        
+        liste = []
+        liste.append(body["text"])
+        for i in range(len(sıralı)):
+            for key in sıralı[i].keys():
+                liste.append(sıralı[i][key])
+        
+        self.yeni_liste.append(liste)
+        
+        if len(self.yeni_liste) == len(self.sorgular):
+            import openpyxl as xl
+        
+            wb = xl.Workbook()
+            sheet = wb.active
+            sheet.title = "Sınıflandırma"
+            for row in self.yeni_liste:
+                sheet.append(row)
+
+            wb.save('sıralı.xlsx')
+        
+                   
                 
-cognitus = Cognitus() 
+cognitus = Cognitus()
