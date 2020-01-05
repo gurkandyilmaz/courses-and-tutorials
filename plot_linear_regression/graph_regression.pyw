@@ -119,5 +119,5 @@ def draw_regression_line(win, left_edge, right_edge):
     line = graphics.Line(left_point, right_point)
     line.draw(win)
 
-
-main()
+if __name__ == "__main__":
+    main()
