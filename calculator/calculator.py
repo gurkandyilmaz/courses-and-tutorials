@@ -1,12 +1,11 @@
 import re,time
-"""
-
+print("""
+****************************************
 Calculator: it takes an input from the user and compute its result.
-Usage: Type the expression in the form of 24/12+4-5 then press enter, 
-    it will return 1 or rounded to 3 version if applicable.
+Usage: type the expression in the form of 24/12+4-5 then press enter, it will return 1.0
 Available operations: Only +,-,*,/
-    
-"""
+****************************************  
+""")
 
 # take the input from the user
 def take_input():
@@ -44,7 +43,7 @@ def take_input():
                 # Check the in-validity of the input
                 if len(invalid_input) !=0:
                     if "(" in invalid_input or ")" in invalid_input:
-                        print("DO NOT USE Parentheses!")
+                        print("DO NOT USE Parentheses")
                     print("INVALID INPUT!!\n")
                     continue
                     
@@ -83,13 +82,13 @@ def do_processing(numbers_only,operations_only):
 def do_operation(number_pairs,oper_type):
 
     if oper_type == "+":
-        return round(number_pairs[0]+number_pairs[1], 3)
+        return round(number_pairs[0]+number_pairs[1], 5)
     elif oper_type == "-":
-        return round(number_pairs[0]-number_pairs[1], 3)
+        return round(number_pairs[0]-number_pairs[1], 5)
     elif oper_type == "/":
-        return round(number_pairs[0]/number_pairs[1], 3)
+        return round(number_pairs[0]/number_pairs[1], 5)
     elif oper_type == "*":
-        return round(number_pairs[0]*number_pairs[1], 3)
+        return round(number_pairs[0]*number_pairs[1], 5)
 
 
 if __name__ == "__main__": 
