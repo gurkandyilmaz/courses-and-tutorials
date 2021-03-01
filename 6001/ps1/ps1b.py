@@ -20,13 +20,13 @@ def calculate_time(annual_salary: float, portion_saved: float, total_cost: float
 
     return months_required
 
-def test_compute_time():
+def test_calculate_time():
     testInputs = [(120000,0.05,500000,0.03),(80000,0.1,800000,0.03),(75000,0.05,1500000,0.05),(75000,0.05,750000,0.05)]
     for annual, portion, cost, semi_raise in testInputs:
         time_required = calculate_time(annual, portion, cost, semi_raise)
         print(f"Months required: {time_required}")
 
 if __name__ == '__main__':
-    test_compute_time()
+    test_calculate_time()
 
 
