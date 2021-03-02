@@ -50,6 +50,7 @@ def calculate_saving_rate(starting_salary: float):
             break
     if steps > break_loop:
         raise ValueError()
+    
     return (best_rate, steps)
 
 def test_calculate_time():
