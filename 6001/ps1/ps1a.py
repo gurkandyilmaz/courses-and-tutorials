@@ -11,6 +11,9 @@ class Savings():
     def save(self, monthly_salary, portion_saved):
         from_investment = self.current_savings * (self.ratio/12)
         self.current_savings += (monthly_salary * portion_saved) + from_investment
+    
+    def resetCurrentSavings(self):
+        self.current_savings = 0
 
     def getCurrentSavings(self):
         return self.current_savings
