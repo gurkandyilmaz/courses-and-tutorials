@@ -3,8 +3,7 @@ import random
 import string
 from pathlib import Path
 
-wd = Path().cwd()
-WORDLIST_FILENAME = wd / "6001/ps2/words.txt"
+WORDLIST_FILENAME = Path().cwd() / "6001/ps2/words.txt"
 
 # Helper code
 def load_words():
@@ -257,7 +256,7 @@ def hangman_with_hints(secret_word):
     print("Welcome to the game Hangman!") 
     print(f"I am thinking of a word that is {len(secret_word)} letters long.")
     print(f"You have {warnings_remaining} warnings left.")
-        
+
     state = True
     while state:
         print("-"*10)
@@ -318,6 +317,5 @@ def hangman_with_hints(secret_word):
 wordlist = load_words()
 
 if __name__ == "__main__":
-    
     secret_word = choose_word(wordlist)
     hangman_with_hints(secret_word)
