@@ -96,11 +96,7 @@ def get_word_score(word, n):
     
     return score
 
-print(get_word_score("it", 7))
 
-#
-# Make sure you understand how this function works and what it does!
-#
 def display_hand(hand):
     """
     Displays the letters currently in the hand.
@@ -119,10 +115,6 @@ def display_hand(hand):
              print(letter, end=' ')      # print all on the same line
     print()                              # print an empty line
 
-#
-# Make sure you understand how this function works and what it does!
-# You will need to modify this for Problem #4.
-#
 def deal_hand(n):
     """
     Returns a random hand containing n lowercase letters.
@@ -150,9 +142,6 @@ def deal_hand(n):
     
     return hand
 
-#
-# Problem #2: Update a hand by removing letters
-#
 def update_hand(hand, word):
     """
     Does NOT assume that hand contains every letter in word at least as
@@ -174,9 +163,6 @@ def update_hand(hand, word):
 
     pass  # TO DO... Remove this line when you implement this function
 
-#
-# Problem #3: Test word validity
-#
 def is_valid_word(word, hand, word_list):
     """
     Returns True if word is in the word_list and is entirely
@@ -191,9 +177,6 @@ def is_valid_word(word, hand, word_list):
 
     pass  # TO DO... Remove this line when you implement this function
 
-#
-# Problem #5: Playing a hand
-#
 def calculate_handlen(hand):
     """ 
     Returns the length (number of letters) in the current hand.
@@ -267,17 +250,6 @@ def play_hand(hand, word_list):
 
     # Return the total score as result of function
 
-
-
-#
-# Problem #6: Playing a game
-# 
-
-
-#
-# procedure you will use to substitute a letter in a hand
-#
-
 def substitute_hand(hand, letter):
     """ 
     Allow the user to replace all copies of one letter in the hand (chosen by user)
@@ -338,12 +310,6 @@ def play_game(word_list):
     print("play_game not implemented.") # TO DO... Remove this line when you implement this function
     
 
-
-#
-# Build data structures used for entire session and play game
-# Do not remove the "if __name__ == '__main__':" line - this code is executed
-# when the program is run directly, instead of through an import statement
-#
 if __name__ == '__main__':
     #word_list = load_words()
     #play_game(word_list)
