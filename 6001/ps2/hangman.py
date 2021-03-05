@@ -1,14 +1,4 @@
 # Problem Set 2, hangman.py
-# Name: 
-# Collaborators:
-# Time spent:
-
-# Hangman Game
-# -----------------------------------
-# Helper code
-# You don't need to understand this helper code,
-# but you will have to know how to use the functions
-# (so be sure to read the docstrings!)
 from os import sep
 import random
 import string
@@ -18,6 +8,7 @@ from pathlib import Path
 wd = Path().cwd()
 WORDLIST_FILENAME = wd / "6001/ps2/words.txt"
 
+# Helper code
 def load_words():
     """
     Returns a list of valid words. Words are strings of lowercase letters.
@@ -26,11 +17,8 @@ def load_words():
     take a while to finish.
     """
     print("Loading word list from file...")
-    # inFile: file
     inFile = open(WORDLIST_FILENAME, 'r')
-    # line: string
     line = inFile.readline()
-    # wordlist: list of strings
     wordlist = line.split()
     print("  ", len(wordlist), "words loaded.")
     return wordlist
@@ -44,12 +32,6 @@ def choose_word(wordlist):
     return random.choice(wordlist)
 
 # end of helper code
-
-# -----------------------------------
-
-# Load the list of words into the variable wordlist
-# so that it can be accessed from anywhere in the program
-wordlist = load_words()
 
 def is_word_guessed(secret_word, letters_guessed):
     '''
@@ -134,7 +116,6 @@ def hangman(secret_word):
     letters_guessed = set()
     letters_remaining = get_available_letters(letters_guessed)
     guessed_word = get_guessed_word(secret_word, letters_guessed)
-    #consonants = 'bcdfghjklmnprstvwxyz'
     vowels = 'aeiou'
 
     print("Welcome to the game Hangman!") 
@@ -193,12 +174,6 @@ def hangman(secret_word):
             print("-"*10)
             print(f"Congratulations, you won!\nYour total score for this game: {total_score}")
 
-# When you've completed your hangman function, scroll down to the bottom
-# of the file and uncomment the first two lines to test
-#(hint: you might want to pick your own
-# secret_word while you're doing your own testing)
-# -----------------------------------
-
 def match_with_gaps(my_word, other_word):
     '''
     my_word: string with _ characters, current guess of secret word
@@ -254,10 +229,7 @@ def hangman_with_hints(secret_word):
     # FILL IN YOUR CODE HERE AND DELETE "pass"
     pass
 
-# When you've completed your hangman_with_hint function, comment the two similar
-# lines above that were used to run the hangman function, and then uncomment
-# these two lines and run this file to test!
-# Hint: You might want to pick your own secret_word while you're testing.
+wordlist = load_words()
 
 if __name__ == "__main__":
     # pass
