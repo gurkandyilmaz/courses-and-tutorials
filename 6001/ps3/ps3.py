@@ -160,8 +160,21 @@ def update_hand(hand, word):
     hand: dictionary (string -> int)    
     returns: dictionary (string -> int)
     """
+    new_hand = hand.copy()
+    clean_new_hand = {}
+    for letter in word:
+        if new_hand.get(letter, 0) != 0:
+            new_hand[letter] -= 1
+        else:
+            continue
 
-    pass  # TO DO... Remove this line when you implement this function
+    for letter, count in new_hand.items():
+        if count > 0:
+            clean_new_hand.update({letter:count})
+        else:
+            continue
+
+    return clean_new_hand
 
 def is_valid_word(word, hand, word_list):
     """
