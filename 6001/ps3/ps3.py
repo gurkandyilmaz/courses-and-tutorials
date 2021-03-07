@@ -162,7 +162,7 @@ def update_hand(hand, word):
     """
     new_hand = hand.copy()
     clean_new_hand = {}
-    for letter in word:
+    for letter in word.lower():
         if new_hand.get(letter, 0) != 0:
             new_hand[letter] -= 1
         else:
@@ -187,8 +187,25 @@ def is_valid_word(word, hand, word_list):
     word_list: list of lowercase strings
     returns: boolean
     """
+    letters_in_hand = [letter for letter in hand.keys() for count in range(hand[letter])]
+    if word.lower() in word_list:
+        for letter in word.lower():
+            if letter in letters_in_hand:
+                letters_in_hand.remove(letter)
+                continue
+            else:
+                return False
+    else:
+        return False
 
-    pass  # TO DO... Remove this line when you implement this function
+    if len(letters_in_hand) >= 0:
+        return True
+
+word_list = load_words()
+print(is_valid_word("hello", {"h":1, "e":1, "l":2,"o":1}, word_list))
+
+
+
 
 def calculate_handlen(hand):
     """ 
