@@ -14,7 +14,10 @@ CONSONANTS = 'bcdfghjklmnpqrstvwxyz'
 HAND_SIZE = 7
 
 SCRABBLE_LETTER_VALUES = {
-    'a': 1, 'b': 3, 'c': 3, 'd': 2, 'e': 1, 'f': 4, 'g': 2, 'h': 4, 'i': 1, 'j': 8, 'k': 5, 'l': 1, 'm': 3, 'n': 1, 'o': 1, 'p': 3, 'q': 10, 'r': 1, 's': 1, 't': 1, 'u': 1, 'v': 4, 'w': 4, 'x': 8, 'y': 4, 'z': 10
+        "*": 0, 'a': 1, 'b': 3, 'c': 3, 'd': 2, 'e': 1, 'f': 4, 'g': 2,\
+        'h': 4, 'i': 1, 'j': 8, 'k': 5, 'l': 1, 'm': 3, 'n': 1, 'o': 1, \
+        'p': 3, 'q': 10, 'r': 1, 's': 1, 't': 1, 'u': 1, 'v': 4, 'w': 4, \
+        'x': 8, 'y': 4, 'z': 10
 }
 
 # -----------------------------------
@@ -131,8 +134,9 @@ def deal_hand(n):
     
     hand={}
     num_vowels = int(math.ceil(n / 3))
+    hand.update({"*":1})
 
-    for i in range(num_vowels):
+    for i in range(num_vowels-1):
         x = random.choice(VOWELS)
         hand[x] = hand.get(x, 0) + 1
     
@@ -200,12 +204,6 @@ def is_valid_word(word, hand, word_list):
 
     if len(letters_in_hand) >= 0:
         return True
-
-word_list = load_words()
-print(is_valid_word("hello", {"h":1, "e":1, "l":2,"o":1}, word_list))
-
-
-
 
 def calculate_handlen(hand):
     """ 
