@@ -300,9 +300,22 @@ def substitute_hand(hand, letter):
     letter: string
     returns: dictionary (string -> int)
     """
-    
-    pass  # TO DO... Remove this line when you implement this function
+    new_hand = hand.copy()
+    unavailable_letters = set(new_hand.keys())
+    all_letters = set(VOWELS + CONSONANTS)
+    available_letters = all_letters.difference(unavailable_letters)
+    available_letters_string = "".join(available_letters)
+
+    print(available_letters_string)
+    if letter in new_hand.keys():
+        count = new_hand[letter]
+        del new_hand[letter]
+        new_letter = random.choice(available_letters_string)
+        new_hand[new_letter] = count
+    else:
+        return new_hand
        
+    return new_hand
     
 def play_game(word_list):
     """
@@ -341,8 +354,10 @@ def play_game(word_list):
 if __name__ == '__main__':
     word_list = load_words()
     #hand = {"a":1, "j":1, "e":1, "f":1, "r":1, "x":1, "*":1}
-    hand = {"a":2, "c":1, "f":1, "i":1, "t":2, "x":1, "*":1}
-    play_hand(hand, word_list)
+    hand = {"a":2, "c":1, "f":1, "i":1, "t":2, "x":1}
+    result = substitute_hand(hand, "a")
+    print(result)
+    #play_hand(hand, word_list)
     #play_game(word_list)
 
 
