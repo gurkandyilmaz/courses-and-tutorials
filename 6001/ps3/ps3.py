@@ -33,12 +33,12 @@ def load_words():
     take a while to finish.
     """
     
-    print("Loading word list from file...")
+    #print("Loading word list from file...")
     inFile = open(WORDLIST_FILENAME, 'r')
     wordlist = []
     for line in inFile:
         wordlist.append(line.strip().lower())
-    print("  ", len(wordlist), "words loaded.")
+    #print("  ", len(wordlist), "words loaded.")
     return wordlist
 
 def get_frequency_dict(sequence):
@@ -92,13 +92,12 @@ def get_word_score(word, n):
     first_component = 0
     second_component_ = 7*len(word) - (3*(n-len(word)))
     second_component = max(1, second_component_)
-
+    
     for letter in word.lower():
         first_component += SCRABBLE_LETTER_VALUES.get(letter)
     score = first_component*second_component
     
     return score
-
 
 def display_hand(hand):
     """
@@ -225,8 +224,9 @@ def calculate_handlen(hand):
     hand: dictionary (string-> int)
     returns: integer
     """
+    letters_in_hand = [letter for letter in hand.keys() for count in range(hand[letter])]
     
-    pass  # TO DO... Remove this line when you implement this function
+    return len(letters_in_hand)
 
 def play_hand(hand, word_list):
 
@@ -259,37 +259,24 @@ def play_hand(hand, word_list):
       
     """
     
-    # BEGIN PSEUDOCODE <-- Remove this comment when you implement this function
-    # Keep track of the total score
+    total_score = 0
+    while calculate_handlen(hand):
+        display_hand(hand)
+        user_input = input('Enter word, or "!!" to indicate that you are finished: ')
+        if user_input == "!!":
+            break
+        else:
+            if is_valid_word(user_input, hand, word_list):
+                score = get_word_score(user_input, calculate_handlen(hand))
+                total_score += score
+                print(f"{user_input} earned {score} points. Total: {total_score}")
+            else:
+                print("That is not a valid word. Please choose another word.")
+            hand = update_hand(hand, user_input)
+            print()
+    print(f"Ran out of letters. Total score: {total_score}")
     
-    # As long as there are still letters left in the hand:
-    
-        # Display the hand
-        
-        # Ask user for input
-        
-        # If the input is two exclamation points:
-        
-            # End the game (break out of the loop)
-
-            
-        # Otherwise (the input is not two exclamation points):
-
-            # If the word is valid:
-
-                # Tell the user how many points the word earned,
-                # and the updated total score
-
-            # Otherwise (the word is not valid):
-                # Reject invalid word (print a message)
-                
-            # update the user's hand by removing the letters of their inputted word
-            
-
-    # Game is over (user entered '!!' or ran out of letters),
-    # so tell user the total score
-
-    # Return the total score as result of function
+    return total_score
 
 def substitute_hand(hand, letter):
     """ 
@@ -353,4 +340,9 @@ def play_game(word_list):
 
 if __name__ == '__main__':
     word_list = load_words()
+    #hand = {"a":1, "j":1, "e":1, "f":1, "r":1, "x":1, "*":1}
+    hand = {"a":2, "c":1, "f":1, "i":1, "t":2, "x":1, "*":1}
+    play_hand(hand, word_list)
     #play_game(word_list)
+
+
