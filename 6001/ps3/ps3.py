@@ -192,17 +192,30 @@ def is_valid_word(word, hand, word_list):
     returns: boolean
     """
     letters_in_hand = [letter for letter in hand.keys() for count in range(hand[letter])]
-    if word.lower() in word_list:
-        for letter in word.lower():
-            if letter in letters_in_hand:
-                letters_in_hand.remove(letter)
-                continue
-            else:
-                return False
-    else:
-        return False
+    suggested = []
+    if "*" not in word:
+        if word.lower() in word_list:
+            for letter in word.lower():
+                if letter in letters_in_hand:
+                    letters_in_hand.remove(letter)
+                    continue
+                else:
+                    return False
+        else:
+            return False
 
-    if len(letters_in_hand) >= 0:
+        if len(letters_in_hand) >= 0:
+            return True
+    else:
+        for char in VOWELS: 
+            for word_ in word_list:
+                if word.replace("*", char) == word_.lower():
+                    suggested.append(word_.lower())
+                else:
+                    continue
+    if not suggested:
+        return False
+    else:
         return True
 
 def calculate_handlen(hand):
@@ -339,8 +352,5 @@ def play_game(word_list):
     
 
 if __name__ == '__main__':
-    #word_list = load_words()
+    word_list = load_words()
     #play_game(word_list)
-    pass
-
-
