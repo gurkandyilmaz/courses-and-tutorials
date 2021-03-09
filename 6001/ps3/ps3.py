@@ -11,7 +11,7 @@ from pathlib import Path
 
 VOWELS = 'aeiou'
 CONSONANTS = 'bcdfghjklmnpqrstvwxyz'
-HAND_SIZE = 7
+HAND_SIZE = 10
 
 SCRABBLE_LETTER_VALUES = {
         "*": 0, 'a': 1, 'b': 3, 'c': 3, 'd': 2, 'e': 1, 'f': 4, 'g': 2,\
@@ -32,13 +32,10 @@ def load_words():
     Depending on the size of the word list, this function may
     take a while to finish.
     """
-    
-    #print("Loading word list from file...")
     inFile = open(WORDLIST_FILENAME, 'r')
     wordlist = []
     for line in inFile:
         wordlist.append(line.strip().lower())
-    #print("  ", len(wordlist), "words loaded.")
     return wordlist
 
 def get_frequency_dict(sequence):
@@ -50,20 +47,13 @@ def get_frequency_dict(sequence):
     sequence: string or list
     return: dictionary
     """
-    
-    # freqs: dictionary (element_type -> int)
     freq = {}
     for x in sequence:
         freq[x] = freq.get(x,0) + 1
     return freq
-	
 
 # (end of helper code)
 # -----------------------------------
-
-#
-# Problem #1: Scoring a word
-#
 def get_word_score(word, n):
     """
     Returns the score for a word. Assumes the word is a
@@ -96,7 +86,6 @@ def get_word_score(word, n):
     for letter in word.lower():
         first_component += SCRABBLE_LETTER_VALUES.get(letter)
     score = first_component*second_component
-    
     return score
 
 def display_hand(hand):
@@ -111,11 +100,11 @@ def display_hand(hand):
 
     hand: dictionary (string -> int)
     """
-    
+    print("Current hand:", end=" ")
     for letter in hand.keys():
         for j in range(hand[letter]):
-             print(letter, end=' ')      # print all on the same line
-    print()                              # print an empty line
+             print(letter, end=' ')     
+    print()                             
 
 def deal_hand(n):
     """
@@ -130,7 +119,6 @@ def deal_hand(n):
     n: int >= 0
     returns: dictionary (string -> int)
     """
-    
     hand={}
     num_vowels = int(math.ceil(n / 3))
     hand.update({"*":1})
@@ -138,11 +126,9 @@ def deal_hand(n):
     for i in range(num_vowels-1):
         x = random.choice(VOWELS)
         hand[x] = hand.get(x, 0) + 1
-    
     for i in range(num_vowels, n):    
         x = random.choice(CONSONANTS)
         hand[x] = hand.get(x, 0) + 1
-    
     return hand
 
 def update_hand(hand, word):
@@ -170,13 +156,11 @@ def update_hand(hand, word):
             new_hand[letter] -= 1
         else:
             continue
-
     for letter, count in new_hand.items():
         if count > 0:
             clean_new_hand.update({letter:count})
         else:
             continue
-
     return clean_new_hand
 
 def is_valid_word(word, hand, word_list):
@@ -202,7 +186,6 @@ def is_valid_word(word, hand, word_list):
                     return False
         else:
             return False
-
         if len(letters_in_hand) >= 0:
             return True
     else:
@@ -225,7 +208,6 @@ def calculate_handlen(hand):
     returns: integer
     """
     letters_in_hand = [letter for letter in hand.keys() for count in range(hand[letter])]
-    
     return len(letters_in_hand)
 
 def play_hand(hand, word_list):
@@ -258,11 +240,10 @@ def play_hand(hand, word_list):
       returns: the total score for the hand
       
     """
-    
     total_score = 0
     while calculate_handlen(hand):
         display_hand(hand)
-        user_input = input('Enter word, or "!!" to indicate that you are finished: ')
+        user_input = input('Please enter word, or "!!" to indicate that you are finished: ')
         if user_input == "!!":
             break
         else:
@@ -274,8 +255,7 @@ def play_hand(hand, word_list):
                 print("That is not a valid word. Please choose another word.")
             hand = update_hand(hand, user_input)
             print()
-    print(f"Ran out of letters. Total score: {total_score}")
-    
+    print(f"Ran out of letters. Total score for this hand: {total_score}")
     return total_score
 
 def substitute_hand(hand, letter):
@@ -306,7 +286,6 @@ def substitute_hand(hand, letter):
     available_letters = all_letters.difference(unavailable_letters)
     available_letters_string = "".join(available_letters)
 
-    print(available_letters_string)
     if letter in new_hand.keys():
         count = new_hand[letter]
         del new_hand[letter]
@@ -314,7 +293,6 @@ def substitute_hand(hand, letter):
         new_hand[new_letter] = count
     else:
         return new_hand
-       
     return new_hand
     
 def play_game(word_list):
@@ -346,18 +324,46 @@ def play_game(word_list):
     * Returns the total score for the series of hands
 
     word_list: list of lowercase strings
-    """
-    
-    print("play_game not implemented.") # TO DO... Remove this line when you implement this function
-    
+    """ 
+    overall_score = 0
+    number_of_hands = 0
+        
+    try:
+        number_of_hands = int(input("Enter total number of hands: "))
+    except:
+        print("Number of hands must be integer!")
+        play_game(word_list)
+         
+    for _ in range(number_of_hands):
+        score = 0
+        replay_status = True
+        hand = deal_hand(HAND_SIZE)
+        old_hand = hand.copy()
+        display_hand(hand)
+        if replay_status:
+            do_substitute = input("Would you like to substitute a letter? (yes/no) ")
+            if do_substitute.lower() == "yes":
+                letter_to_be_replaced = input("Which letter would you like to replace: ")
+                hand = substitute_hand(hand, letter_to_be_replaced)
+        score = play_hand(hand, word_list) 
+        overall_score += score
+        print("------------")
+        do_replay = input("Would you like to replay the hand? (yes/no) ")
+        if do_replay.lower() == "no":
+            continue
+        elif do_replay.lower() == "yes":
+            replay_status = False
+            score = 0
+            overall_score += play_hand(old_hand, word_list)
+            continue
+        else:
+            print("Invalid input program will be terminated!!!")
+            break
+    return overall_score
 
 if __name__ == '__main__':
     word_list = load_words()
-    #hand = {"a":1, "j":1, "e":1, "f":1, "r":1, "x":1, "*":1}
-    hand = {"a":2, "c":1, "f":1, "i":1, "t":2, "x":1}
-    result = substitute_hand(hand, "a")
-    print(result)
-    #play_hand(hand, word_list)
-    #play_game(word_list)
-
+    score = play_game(word_list)
+    print()
+    print(f"Total overall score: {score}")
 
