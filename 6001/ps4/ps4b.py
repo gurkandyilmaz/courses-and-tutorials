@@ -16,14 +16,12 @@ def load_words(file_name):
     Depending on the size of the word list, this function may
     take a while to finish.
     '''
-    print("Loading word list from file...")
     # inFile: file
     inFile = open(file_name, 'r')
     # wordlist: list of strings
     wordlist = []
     for line in inFile:
         wordlist.extend([word.lower() for word in line.split(' ')])
-    print("  ", len(wordlist), "words loaded.")
     return wordlist
 
 def is_word(word_list, word):
@@ -242,12 +240,14 @@ def test_PlainTextMessage():
 
 def test_CiphertextMessage():
     #messages_and_shifts format: {(text, shift_value):expected_value}
-    messages_and_shifts = {("How are you? Z",0):"How are you? Z", ("How are you? Z",1):"Ipx bsf zpv? A", ("What is THIS?",3):"Zkdw lv WKLV?"}
-    for (text, shift), expected in messages_and_shifts.items():
+    messages_and_shifts = {"jgnnq JGnNQ":(24,"hello HElLO"), "Ipx bsf zpv? A":(25,"How are you? Z"), "Zkdw lv WKLV?":(23,"What is THIS?")}
+    for text, (shift,expected) in messages_and_shifts.items():
         cipher_text = CiphertextMessage(text)
-        actual = cipher_text.decrypt_message()
-        assert actual == expected, f"Actual ({actual}) and Expected ({expected}) values are Different!!!"
-
+        actual_shift, actual_text = cipher_text.decrypt_message()
+        assert actual_text == expected, f"Actual ({actual_text}) and Expected ({expected}) values are Different !!"
+        assert actual_shift == shift, f"Actula shift ({actual_shift} and Expected shift ({shift}) are Different !!)"
+        print(f"Expected: {shift} {expected}")
+        print(f"Actual: {actual_shift} {actual_text}")
 
 if __name__ == '__main__':
 
@@ -261,7 +261,7 @@ if __name__ == '__main__':
 #    print('Expected Output:', (24, 'hello HELLO'))
 #    print('Actual Output:', ciphertext.decrypt_message())
     #TODO: WRITE YOUR TEST CASES HERE
-
+    test_CiphertextMessage()
     #TODO: best shift value and unencrypted story 
     
     pass #delete this line and replace with your code here
