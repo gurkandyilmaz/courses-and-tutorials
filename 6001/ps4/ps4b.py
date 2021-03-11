@@ -1,9 +1,7 @@
 # Problem Set 4B
 
 import string
-
 from pathlib import Path
-
 
 ### HELPER CODE ###
 def load_words(file_name):
@@ -16,9 +14,7 @@ def load_words(file_name):
     Depending on the size of the word list, this function may
     take a while to finish.
     '''
-    # inFile: file
     inFile = open(file_name, 'r')
-    # wordlist: list of strings
     wordlist = []
     for line in inFile:
         wordlist.extend([word.lower() for word in line.split(' ')])
@@ -229,7 +225,6 @@ class CiphertextMessage(Message):
                 continue
         return (best_shift, decrypted_text)
 
-
 def test_PlainTextMessage():
     #messages_and_shifts format: {(text, shift_value):expected_value}
     messages_and_shifts = {("How are you? Z",0):"How are you? Z", ("How are you? Z",1):"Ipx bsf zpv? A", ("What is THIS?",3):"Zkdw lv WKLV?"}
@@ -250,18 +245,6 @@ def test_CiphertextMessage():
         print(f"Actual: {actual_shift} {actual_text}")
 
 if __name__ == '__main__':
-
-    #Example test case (PlaintextMessage)
-#    plaintext = PlaintextMessage('hello', 2)
-#    print('Expected Output: jgnnq')
-#    print('Actual Output:', plaintext.get_message_text_encrypted())
-#
-#    #Example test case (CiphertextMessage)
-#    ciphertext = CiphertextMessage('jgnnq JGNNQ')
-#    print('Expected Output:', (24, 'hello HELLO'))
-#    print('Actual Output:', ciphertext.decrypt_message())
-    #TODO: WRITE YOUR TEST CASES HERE
+    test_PlainTextMessage()
     test_CiphertextMessage()
-    #TODO: best shift value and unencrypted story 
     
-    pass #delete this line and replace with your code here
