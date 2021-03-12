@@ -15,15 +15,10 @@ def load_words(file_name):
     Depending on the size of the word list, this function may
     take a while to finish.
     '''
-    
-    print("Loading word list from file...")
-    # inFile: file
     inFile = open(file_name, 'r')
-    # wordlist: list of strings
     wordlist = []
     for line in inFile:
         wordlist.extend([word.lower() for word in line.split(' ')])
-    print("  ", len(wordlist), "words loaded.")
     return wordlist
 
 def is_word(word_list, word):
@@ -45,7 +40,6 @@ def is_word(word_list, word):
     word = word.lower()
     word = word.strip(" !@#$%^&*()-_+={}[]|\\:;'<>?,./\"")
     return word in word_list
-
 
 ### END HELPER CODE ###
 CWD = Path().cwd()
@@ -125,13 +119,14 @@ class SubMessage(object):
         '''
         encrypted_text = ""
         for token in self.get_message_text().split():
-            if is_word(self.get_valid_words(), token):
-                for character in token:
-                    if character.isalpha():
-                        encrypted_text += transpose_dict[character]
-                    else:
-                        encrypted_text += character
-                encrypted_text += " "
+            #print("Token: ", token)
+            for character in token:
+                #print("Char: ", character)
+                if character.isalpha():
+                    encrypted_text += transpose_dict[character]
+                else:
+                    encrypted_text += character
+            encrypted_text += " "
                     
         return encrypted_text.strip()
 
@@ -146,7 +141,8 @@ class EncryptedSubMessage(SubMessage):
             self.message_text (string, determined by input text)
             self.valid_words (list, determined using helper function load_words)
         '''
-        pass #delete this line and replace with your code here
+        SubMessage.__init__(self, text)
+
 
     def decrypt_message(self):
         '''
@@ -166,21 +162,57 @@ class EncryptedSubMessage(SubMessage):
         
         Hint: use your function from Part 4A
         '''
-        pass #delete this line and replace with your code here
-    
+        all_matches = {}
+        all_permutations = get_permutations(VOWELS_LOWER)
+        for permutation in all_permutations:
+            transpose_dict = self.build_transpose_dict(permutation)
+            decrypted_message = self.apply_transpose(transpose_dict)
+            i = 0
+            for token in decrypted_message.split():
+                if is_word(self.get_valid_words(), token):
+                    i += 1
+            all_matches[decrypted_message] = i
+        
+        # Many possible decryptions, so choose the one containing the most valid english words.
+        best_matches = {match:count for match, count in sorted(all_matches.items(), key=lambda items: items[1], reverse=True)}
+        return list(best_matches.keys())[0]
+        
+def test_SubMessage():
+    print("----> SubMessage Test Started <----")
+    # Test - 1
+    message = SubMessage("Hello World!")
+    permutation = "iouae"
+    enc_dict = message.build_transpose_dict(permutation)
+    print("Original: ", message.get_message_text(), "Permutation: ", permutation)
+    print("Encrypted: ", message.apply_transpose(enc_dict))
+    print()
+    # Test - 2
+    message = SubMessage("What are you Studying? right NOW.")
+    permutation = "eouai"
+    enc_dict = message.build_transpose_dict(permutation)
+    print("Original: ", message.get_message_text(), "Permutation: ", permutation)
+    print("Encrypted: ", message.apply_transpose(enc_dict))
+    print("----> SubMessage Test Finished <----")
+
+def test_EncryptedSubMessage():
+    print("----> EncryptedSubMessage Test Started <----")
+    # Test - 1
+    message = SubMessage("Hello World!")
+    permutation = "iouae"
+    enc_dict = message.build_transpose_dict(permutation)
+    enc_message = EncryptedSubMessage(message.apply_transpose(enc_dict))
+    print("Original: ", message.get_message_text())
+    print("Actual: ", enc_message.decrypt_message())
+    print()
+    # Test - 2
+    message = SubMessage("What are you Studying? right NOW.")
+    permutation = "eouai"
+    enc_dict = message.build_transpose_dict(permutation)
+    enc_message = EncryptedSubMessage(message.get_message_text())
+    print("Original: ", message.get_message_text())
+    print("Actual: ", enc_message.decrypt_message())
+    print("----> EncryptedSubMessage Test Finished <----")
 
 if __name__ == '__main__':
-    submessage = SubMessage('Hello World!')
-    result = submessage.build_transpose_dict('eaiuo')
-    print(submessage.apply_transpose(result))
-    #    # Example test case
-#    message = SubMessage("Hello World!")
-#    permutation = "eaiuo"
-#    enc_dict = message.build_transpose_dict(permutation)
-#    print("Original message:", message.get_message_text(), "Permutation:", permutation)
-#    print("Expected encryption:", "Hallu Wurld!")
-#    print("Actual encryption:", message.apply_transpose(enc_dict))
-#    enc_message = EncryptedSubMessage(message.apply_transpose(enc_dict))
-#    print("Decrypted message:", enc_message.decrypt_message())
-#     
-#    #TODO: WRITE YOUR TEST CASES HERE
+    test_SubMessage()
+    test_EncryptedSubMessage()
