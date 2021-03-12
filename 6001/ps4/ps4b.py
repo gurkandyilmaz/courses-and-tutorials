@@ -221,7 +221,8 @@ class CiphertextMessage(Message):
             for word in self.apply_shift(idx).split():
                 if word in self.get_valid_words():
                     best_shift = idx
-                    decrypted_text += self.apply_shift(idx)
+                    if self.apply_shift(idx) not in decrypted_text:
+                        decrypted_text += self.apply_shift(idx)
             else:
                 continue
         return (best_shift, decrypted_text)
@@ -248,5 +249,3 @@ def test_CiphertextMessage():
 if __name__ == '__main__':
     test_PlainTextMessage()
     test_CiphertextMessage()
-    story = get_story_string()
-    print(story)
