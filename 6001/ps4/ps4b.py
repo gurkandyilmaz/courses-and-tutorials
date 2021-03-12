@@ -44,14 +44,15 @@ def get_story_string():
     """
     Returns: a story in encrypted text.
     """
-    f = open("story.txt", "r")
+    f = open(STORY_FILENAME, "r")
     story = str(f.read())
     f.close()
     return story
 
 ### END HELPER CODE ###
-
-WORDLIST_FILENAME = Path().cwd() / '6001/ps4/words.txt'
+CWD = Path().cwd()
+WORDLIST_FILENAME = CWD / '6001/ps4/words.txt'
+STORY_FILENAME = CWD / '6001/ps4/story.txt'
 
 class Message(object):
     def __init__(self, text):
@@ -247,4 +248,5 @@ def test_CiphertextMessage():
 if __name__ == '__main__':
     test_PlainTextMessage()
     test_CiphertextMessage()
-    
+    story = get_story_string()
+    print(story)
