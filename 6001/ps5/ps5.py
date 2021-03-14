@@ -1,4 +1,3 @@
-# 6.0001/6.00 Problem Set 5 - RSS Feed Filter
 # Name:
 # Collaborators:
 # Time:
@@ -72,7 +71,7 @@ class NewsStory():
         return self.description
 
     def get_link(self):
-        return self.description
+        return self.link
 
     def get_pubdate(self):
         return self.pubdate
@@ -93,26 +92,73 @@ class Trigger(object):
 # PHRASE TRIGGERS
 
 # Problem 2
-# TODO: PhraseTrigger
+class PhraseTrigger(Trigger):
+    def __init__(self, phrase: str) -> None:
+        super().__init__()
+        self.phrase = phrase
+
+    def is_phrase_in(self, text: str) -> bool:
+        # process text, remove puncts and split it.
+        tokens = text.lower().split()
+        text_cleaned = " ".join([token.strip(string.punctuation) for token in tokens])
+        for punc in string.punctuation:
+            if punc in text_cleaned:
+                tokens = text_cleaned.split(punc)
+                text_cleaned = " ".join([token.strip(string.punctuation) for token in tokens])
+                break
+
+        phrase_tokens = self.phrase.lower().split()
+        text_tokens = text_cleaned.split()
+        match = False
+        for idx in range(len(text_tokens)):
+            if phrase_tokens == text_tokens[idx: idx+len(phrase_tokens)]:
+                match = True
+        
+        return match
 
 # Problem 3
-# TODO: TitleTrigger
+class TitleTrigger(PhraseTrigger):
+    def __init__(self, phrase: str) -> None:
+        super().__init__(phrase)
+    
+    def evaluate(self, story):
+        return self.is_phrase_in(story.get_title()) 
+
 
 # Problem 4
-# TODO: DescriptionTrigger
+class DescriptionTrigger(PhraseTrigger):
+    def __init__(self, phrase: str) -> None:
+        super().__init__(phrase)
+
+    def evaluate(self, story):
+        return self.is_phrase_in(story.get_description())
 
 # TIME TRIGGERS
 
 # Problem 5
-# TODO: TimeTrigger
+class TimeTrigger(Trigger):
+    def __init__(self, time_in_est: str) -> None:
+        super().__init__()
+        self.time = datetime.strptime(time_in_est, "%d %b %Y %H:%M:%S").replace(tzinfo=pytz.timezone("EST"))
 # Constructor:
 #        Input: Time has to be in EST and in the format of "%d %b %Y %H:%M:%S".
 #        Convert time from string to a datetime before saving it as an attribute.
 
 # Problem 6
 # TODO: BeforeTrigger and AfterTrigger
+class BeforeTrigger(TimeTrigger):
+    def __init__(self, time_in_est: str) -> None:
+        super().__init__(time_in_est)
 
+    def evaluate(self, story):
+        pass
 
+class AfterTrigger(TimeTrigger):
+    def __init__(self, time_in_est: str) -> None:
+        super().__init__(time_in_est)
+    
+    def evaluate(self, story):
+        pass
 # COMPOSITE TRIGGERS
 
 # Problem 7
@@ -237,9 +283,9 @@ def main_thread(master):
 
 
 if __name__ == '__main__':
-    root = Tk()
-    root.title("Some RSS parser")
-    t = threading.Thread(target=main_thread, args=(root,))
-    t.start()
-    root.mainloop()
-
+#    root = Tk()
+#    root.title("Some RSS parser")
+#    t = threading.Thread(target=main_thread, args=(root,))
+#    t.start()
+#    root.mainloop()
+    pass
