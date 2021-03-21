@@ -1,7 +1,6 @@
-// Given a positive number, write a program that prints 
-// if that number is perfect. A perfect 
-// number is special number that its factors(excluding the number itself) 
-// add up to that number. For example, 6 is a perfect number since its factors 1+2+3 add up to 6.
+// Given a positive number, write a program that prints if that number is perfect. 
+// A perfect number is special number that its factors(excluding the number itself) 
+// add up to that number. For example, 6 is a perfect number since its factors 1+2+3 add up to 6
 
 #include <stdio.h>
 
@@ -46,9 +45,5 @@ int isPerfect(unsigned int number, unsigned int divider, unsigned int total)
 			total += 0;
 			return isPerfect(number, divider+1, total);
 		}
-		
-	
 	}
 }
-
-
