@@ -4,7 +4,7 @@
 #define SIZE 5
 
 int a[SIZE] = {8,1,4,3,7};
-int b[SIZE] = {2,7,6,9,3};
+int b[SIZE] = {2,7,6,1,3};
 int union_of_sets[2*SIZE], intersection_of_sets[SIZE];
 
 void set_union(int first[], int second[]);
@@ -27,7 +27,7 @@ int main(void)
 	puts("");
 
 	set_union(a, b);
-
+	set_intersection(a, b);
 }
 
 void set_union(int first[], int second[])
@@ -76,6 +76,30 @@ void set_union(int first[], int second[])
 
 void set_intersection(int first[], int second[])
 {
+	int counter = 0;
 
+	for(size_t first_=0; first_<SIZE; ++first_)
+	{
+		for(size_t second_=0; second_<SIZE; ++second_)
+		{
+			if(first[first_] == second[second_]) // If the element is common to both arrays add it to the intersection
+			{
+				intersection_of_sets[counter] = first[first_];
+				counter++;
+			}
+			else
+			{
+				continue;
+			}
+		}
+	
+	}
+
+	printf("Intersection : \n");
+	for(size_t m=0; m<2*SIZE; ++m)
+	{
+		printf("%d ", intersection_of_sets[m]);
+	}
+	puts("");
 }
 
