@@ -4,31 +4,29 @@
 #include <sys/cdefs.h>
 #define SIZE 10
 
-int a[SIZE] = {21,7,5,3,8,4,12,23,36,14};
-int b[SIZE];
-int counter = 0;
+int a[SIZE] = {21,7,5,11,8,4,12,23,36,14};
+int counter = 0; // It will be used to track which elements will be replaced in the array.
 
-int selection_sort(int arr[]);
+int selection_sort(int arr[]); // SelectionSort function
 
 int main(void)
 {
-	int smallest_, tmp;
-
 	printf("Unsorted Array: \n");
 	for (size_t i = 0; i<SIZE; ++i)
 	{
-		printf("%d ", a[i]);
+		printf("%4d ", a[i]);
 	}
 	puts("");
 	
-	printf("Smallest number: %d \n", selection_sort(a));
+	selection_sort(a);
 }
 
 int selection_sort(int arr[])
 {
-	int smallest = arr[counter]; // take an arbitrary element from the array as the smallest.
-	int smallest_idx, tmp;
-
+	int smallest = arr[counter]; // take the fisrt element from the array as the smallest.
+	int idx = counter; // to be used when the smallest element will keep its place in the array
+	int tmp;
+	
 	// Selection
 	// Take one element and compare it to all other elements
 	for(size_t first = counter; first < SIZE; ++first)
@@ -38,21 +36,29 @@ int selection_sort(int arr[])
 			if (arr[second] < arr[first] && arr[second] < smallest)
 			{
 				smallest = arr[second];
-				smallest_idx = second;
-				printf("Smallest: %d \n", smallest);
+				idx = second;
 			}
 			else
 			{
 				continue;
 			}
 		}
+		if(counter == SIZE-1) // The last element will stay as the last element.
+		{
+			idx = counter;
+		}
 	}
-	if(counter < SIZE)
+	
+	// Sorting
+	// Take the smallest element, place it in the first place
+	if(counter < SIZE) // make a recursive call to the function until SIZE-1 elements are sorted
 	{
 		tmp = arr[counter];
+		printf("Tmp: %d IDX: %d \n", tmp, idx);
 		arr[counter] = smallest;
-		arr[smallest_idx] = tmp;
+		arr[idx] = tmp;
 		counter++;
+
 		return selection_sort(arr);
 	}
 	else
@@ -60,10 +66,10 @@ int selection_sort(int arr[])
 		printf("Sorted Array: \n");
 		for(size_t y = 0; y<SIZE; ++y)
 		{
-			printf("%d", arr[y]);
+			printf("%4d", arr[y]);
 		}
 		puts("");
+
 		return 0;
 	}
-
 }
