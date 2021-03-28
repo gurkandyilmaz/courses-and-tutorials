@@ -29,11 +29,11 @@ int main(void)
 		printf("bPtr[%lu] = %d\n", i, bPtr[i]);
 	}
 
-	puts("\nname");
+	puts("\nPointer offset notation");
 
 	for(size_t offset = 0; offset < ARRAY_SIZE; ++offset)
 	{
-		printf("b[%lu] = %d\n", offset, *(b+offset));
+		printf("*(bPtr+ %lu) = %d\n", offset, *(bPtr + offset));
 	}
 
 }
