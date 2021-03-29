@@ -5,9 +5,9 @@
 
 int main()
 {
-	const char *s1 = "Happy New Year";
-	const char *s2 = "Happy New Year";
-	const char *s3 = "Happy Holidays";
+	const char *s1 = "Hello World";
+	const char *s2 = "Hello World !";
+	const char *s3 = "Hello";
 
 	printf("s1 = %s\ns2 = %s\ns3 = %s\n", s1, s2, s3);
 	printf("strcmp(s1,s2) = %2d\n", strcmp(s1, s2));
