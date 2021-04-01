@@ -2,13 +2,14 @@
 // The program should use 4 arrays of pointers to char called article, noun, verb, preposition.
 // The order is article + noun + verb + preposition + article + noun.
 
+#include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-#define ARRAY_SIZE 7
+#define ARRAY_SIZE 10
 
 void Print1DArray(char *input_array[ARRAY_SIZE]);
-
+const char *ChooseWord(char *input_array[ARRAY_SIZE]);
 
 int main()
 {
@@ -16,8 +17,10 @@ int main()
 	char *noun[ARRAY_SIZE] = {"boy", "girl" ,"dog", "town", "car"};
 	char *verb[ARRAY_SIZE] = {"drove", "jumped", "ran" , "walked", "skipped"};
 	char *preposition[ARRAY_SIZE] = {"to", "from", "over", "under", "on"};
-	char sentence[ARRAY_SIZE];
-	int random_index;	
+	
+	char *word[ARRAY_SIZE] = {"A", "l", "a"};
+	char *wordd[ARRAY_SIZE] = {"k", "ü", "ç"};
+	char *sentence;
 	
 	srand(time(NULL)); // random seed
 
@@ -25,7 +28,17 @@ int main()
 //	Print1DArray(noun);
 //	Print1DArray(verb);
 //	Print1DArray(preposition);
-	printf("Random: %d\n", rand()%5);
+	//printf("Random: %s\n", ChooseWord(article));
+	sentence =  strcat(*word, *wordd);
+	printf("Sentence: %s\n", sentence);
+}
+
+const char *ChooseWord(char *input_array[ARRAY_SIZE])
+{
+	int random_index;
+	random_index = rand() % 5;
+	//printf("Random index: %d and word: \"%s\"\n", random_index, word);
+	return input_array[random_index];
 }
 
 void Print1DArray(char *input_array[ARRAY_SIZE])
