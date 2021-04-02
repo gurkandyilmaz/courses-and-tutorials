@@ -18,9 +18,9 @@ int main()
 	char *verb[ARRAY_SIZE] = {"drove", "jumped", "ran" , "walked", "skipped"};
 	char *preposition[ARRAY_SIZE] = {"to", "from", "over", "under", "on"};
 	
-	char *word[ARRAY_SIZE] = {"A", "l", "a"};
-	char *wordd[ARRAY_SIZE] = {"k", "ü", "ç"};
-	char *sentence;
+	char word[ARRAY_SIZE] = {'A', 'l', 'a'};
+	char wordd[ARRAY_SIZE] = {'k', 'x', 'q'};
+	char test[ARRAY_SIZE];
 	
 	srand(time(NULL)); // random seed
 
@@ -28,15 +28,27 @@ int main()
 //	Print1DArray(noun);
 //	Print1DArray(verb);
 //	Print1DArray(preposition);
-	//printf("Random: %s\n", ChooseWord(article));
-	sentence =  strcat(*word, *wordd);
+
+	const char *sentence = ChooseWord(article);
 	printf("Sentence: %s\n", sentence);
+	for(size_t i = 0; i < strlen(sentence); i++)
+	{
+		printf("Word: %c\n", *(sentence+i));
+	}
+//	printf("Random: %s\n", ChooseWord(article));
+//	sentence =  strcat(word, wordd);
+//	printf("Sentence: %s\n", sentence);
 }
 
 const char *ChooseWord(char *input_array[ARRAY_SIZE])
 {
+	char word[ARRAY_SIZE];
 	int random_index;
 	random_index = rand() % 5;
+//	for(size_t i = 0; i < ARRAY_SIZE; ++i)
+//	{
+//		word[i]
+//	}
 	//printf("Random index: %d and word: \"%s\"\n", random_index, word);
 	return input_array[random_index];
 }
