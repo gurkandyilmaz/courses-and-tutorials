@@ -1,6 +1,6 @@
 // This program demonstrates one of the two ways while making a call to a function
 // namely call by reference. In this way addresses of the values are sent to the function 
-// then computations made with theses references affect the original values.
+// then computations made with these references affect the original values.
 
 #include <stdio.h>
 
