@@ -6,66 +6,80 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-#define ARRAY_SIZE 10
+#define OUTPUT_SIZE 100
 
-void Print1DArray(char *input_array[ARRAY_SIZE]);
-const char *ChooseWord(char *input_array[ARRAY_SIZE]);
+void Print1DArray(char *input_array[], int array_size);
+char *ChooseWord(char *input_array[], int array_size);
 
 int main()
 {
-	char *article[ARRAY_SIZE] = {"the", "a" ,"one", "some", "any"};
-	char *noun[ARRAY_SIZE] = {"boy", "girl" ,"dog", "town", "car"};
-	char *verb[ARRAY_SIZE] = {"drove", "jumped", "ran" , "walked", "skipped"};
-	char *preposition[ARRAY_SIZE] = {"to", "from", "over", "under", "on"};
-	
-	char word[ARRAY_SIZE] = {'A', 'l', 'a'};
-	char wordd[ARRAY_SIZE] = {'k', 'x', 'q'};
-	char test[ARRAY_SIZE];
-	
-	srand(time(NULL)); // random seed
+	char *article[] = {" the", " a", " one", " some", " any"};
+	char *noun[] = {" boy", " girl" ," dog", " town", " car"};
+	char *verb[] = {" drove", " jumped", " ran" , " walked", " skipped"};
+	char *preposition[] = {" to", " from", " over", " under", " on"};
 
-//	Print1DArray(article);
-//	Print1DArray(noun);
-//	Print1DArray(verb);
-//	Print1DArray(preposition);
+	char output[OUTPUT_SIZE] = "";
+	char *outputPtr = output;
 
-	const char *sentence = ChooseWord(article);
-	printf("Sentence: %s\n", sentence);
-	for(size_t i = 0; i < strlen(sentence); i++)
+	char *word_from_article;
+	char *word_from_noun;
+	char *word_from_verb;
+	char *word_from_preposition;
+
+	srand(time(NULL));
+	
+//	Print1DArray(article, sizeof(article)/sizeof(*article));
+//	Print1DArray(noun, sizeof(noun)/sizeof(*noun));
+//	Print1DArray(verb, sizeof(verb)/sizeof(*verb));
+//	Print1DArray(preposition, sizeof(preposition)/sizeof(*preposition));
+	
+	for(size_t i = 0; i < 2; ++i) // Number of sentences.
 	{
-		printf("Word: %c\n", *(sentence+i));
+		word_from_article = ChooseWord(article, sizeof(article)/sizeof(*article));
+		outputPtr =  strcat(output, word_from_article);
+		
+		word_from_noun = ChooseWord(noun, sizeof(noun)/sizeof(*noun));
+		outputPtr = strcat(output, word_from_noun);
+		
+		word_from_verb = ChooseWord(verb, sizeof(verb)/sizeof(*verb));
+		outputPtr = strcat(output, word_from_verb);
+
+		word_from_preposition = ChooseWord(preposition, sizeof(preposition)/sizeof(*preposition));
+		outputPtr = strcat(output, word_from_preposition);
+
+		word_from_article = ChooseWord(article, sizeof(article)/sizeof(*article));
+		outputPtr = strcat(output, word_from_article);
+
+		word_from_noun = ChooseWord(noun, sizeof(noun)/sizeof(*noun));
+		outputPtr = strcat(output, word_from_noun);
+		outputPtr = strcat(output, ".");
 	}
-//	printf("Random: %s\n", ChooseWord(article));
-//	sentence =  strcat(word, wordd);
-//	printf("Sentence: %s\n", sentence);
+
+	printf("Random Sentence:\n%s\n", outputPtr);
 }
 
-const char *ChooseWord(char *input_array[ARRAY_SIZE])
+char *ChooseWord(char *input_array[], int array_size)
 {
-	char word[ARRAY_SIZE];
 	int random_index;
-	random_index = rand() % 5;
-//	for(size_t i = 0; i < ARRAY_SIZE; ++i)
-//	{
-//		word[i]
-//	}
-	//printf("Random index: %d and word: \"%s\"\n", random_index, word);
-	return input_array[random_index];
+	random_index = rand() % array_size;
+	return *(input_array + random_index);
 }
 
-void Print1DArray(char *input_array[ARRAY_SIZE])
+void Print1DArray(char *input_array[], int array_size)
 {
 	puts("Elements of the array: ");
-	for (size_t i = 0; i < ARRAY_SIZE; ++i)
+	
+	for (size_t i = 0; i < array_size; ++i)
 	{
-		if ( input_array[i] != NULL )
+		if ( *(input_array + i) != NULL )
 		{
-			printf("%s ", input_array[i]);
+			printf("%s", *(input_array + i));
 		}
 		else
 		{
-			return;
+			continue;
 		}
 	}
+	
 	puts(" ");
 }
