@@ -13,5 +13,5 @@ Some of the exercises are listed below:
 - **ch06**: Exercises related to the chapter *C Arrays*
 - **ch07**: Exercises related to the chapter *C Pointers*
 - **ch08**: Exercises related to the chapter *C Characters and Strings*
-- **ch010**: Exercises related to the chapter *Structures, Unions, Bit Manipulation and Enumeration*
+- **ch10**: Exercises related to the chapter *Structures, Unions, Bit Manipulation and Enumeration*
 
