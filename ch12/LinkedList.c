@@ -1,5 +1,5 @@
 // C Data Structures, Linked Lists
-// Inserting and Deleting nodes in a list
+// Inserting into a list
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,7 +15,6 @@ typedef List *ListPtr;
 
 // function prototypes
 void insert(ListPtr *sPtr, char value);
-char delete(ListPtr *sPtr, char value);
 int isempty(ListPtr sPtr);
 void printList(ListPtr currentPtr);
 void instructions(void);
@@ -39,28 +38,7 @@ int main(void)
 				insert(&startPtr,item);
 				printList(startPtr);
 				break;
-			case 2:
-				if( !isempty(startPtr) )
-				{
-					printf("Enter Character to be deleted: ");
-					scanf("%c", &item);
-					if (delete(&startPtr, item))
-					{
-						printf("%c deleted.\n", item);
-						printList(startPtr);
-					}
-					else 
-					{
-						printf("%c not found.\n\n", item);
-					}
-
-				}
-				else
-				{
-					puts("List is empty.\n");
-				}
-				break;
-
+			
 			default:
 				puts("Invalid input");
 				instructions();
@@ -77,16 +55,62 @@ void instructions(void)
 {
 	puts("Enter your choice:\n"
 		"1 to insert an element\n"
-		"2 to delete an element\n"
-		"3 to end");
+		"2 to end\n"
+		);
+}
+void insert(ListPtr *sPtr, char value)
+{
+	ListPtr newPtr = malloc(sizeof(List));
+
+	if (newPtr != NULL)
+	{
+		newPtr->data = value;
+		newPtr->nextPtr = NULL; // node does not link to another node
+
+		ListPtr previousPtr = NULL;
+		ListPtr currentPtr = *sPtr;
+
+		while(currentPtr != NULL && value > currentPtr->data)
+		{
+			previousPtr = currentPtr;
+			currentPtr = currentPtr->nextPtr;
+		}
+		if( previousPtr == NULL)
+		{
+			newPtr->nextPtr = *sPtr;
+			*sPtr = newPtr;
+		}
+		else 
+		{
+			previousPtr-> nextPtr = newPtr;
+			newPtr->nextPtr = currentPtr;
+		}
+	}
+	else
+	{
+		printf("%c not inserted. No memory available.\n", value);
+	}
+
 }
 
+void printList(ListPtr currentPtr)
+{
+	if(isempty(currentPtr))
+	{
+		puts("List is empty\n");
+	}
+	else
+	{
+		puts("The list is: ");
+		while (currentPtr != NULL) {
+			printf("%c---> ", currentPtr->data);
+			currentPtr = currentPtr->nextPtr;
+		}
+		puts("NULL\n");
+	}
+}
 
-
-
-
-
-
-
-
-
+int isempty(ListPtr sPtr)
+{
+	return sPtr == NULL;
+}
