@@ -4,7 +4,7 @@
 #include <iostream>
 
 int SquareByValue(int ); // does not modify the caller's value
-int SquareByReference(int &); // modifies the caller's value
+void SquareByReference(int &); // modifies the caller's value
 
 int main()
 {
@@ -13,12 +13,10 @@ int main()
 
 	std::cout << "The number before SquareByValue is: " << x << std::endl;
 	std::cout << "SquareByValue is: " << SquareByValue(x) << std::endl;
-	std::cout << "The number after SquareByValue is: " << x << std::endl;
-
-	std::cout << "\n\n" << std::endl;
+	std::cout << "The number after SquareByValue is: " << x << std::endl << std::endl;
 
 	std::cout << "The number before SquareByReference is: " << z << std::endl;
-	std::cout << "SquareByReference is: " << SquareByReference(z) << std::endl;
+	SquareByReference(z);
 	std::cout << "The number after SquareByReference is: " << z << std::endl;
 
 }
@@ -29,9 +27,9 @@ int SquareByValue(int number_value)
 	return number_value;
 }
 
-int SquareByReference(int &number_reference) // &number_reference is the address
+void SquareByReference(int &number_reference) // &number_reference is the address
 {
 	number_reference *= number_reference;
-	return number_reference;
+	std::cout << "SquareByReference is: " << number_reference << std::endl;
 }
 
