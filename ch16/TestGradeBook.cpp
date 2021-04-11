@@ -11,8 +11,8 @@ using namespace std;
 int main()
 {
 	string nameOfCourse;
-	GradeBook gradeBook1("Math 101 Course for the Grade Book 1."); 
-	GradeBook gradeBook2("Math 102 Course for the Grade Book 2.");
+	GradeBook gradeBook1("Course Name shorter than 35 chars"); 
+	GradeBook gradeBook2("Course Name longer than 35 characters for the Grade Book 2.");
 
 //	cout << "Specify a course name: ";
 //	getline(cin, nameOfCourse); // get the input from the keyboard and assign it to nameOfCourse
@@ -24,10 +24,10 @@ int main()
 	gradeBook1.displayMessage();
 	cout << "gradeBook2.displayMessage(): ";
 	gradeBook2.displayMessage();
-	
-	cout << "After setting gradebook 1 to \"Intro to CS\" gradeBook1.displayMessage(): " << endl;
-	gradeBook1.setCourseName("Intro to CS");
-	gradeBook1.displayMessage();
+		
+	cout << "After setting gradebook 2 to \"Intro to CS\" gradeBook2.displayMessage(): " << endl;
+	gradeBook2.setCourseName("Intro to CS");
+	gradeBook2.displayMessage();
 
 }
 

@@ -6,9 +6,8 @@
 using namespace std;
 
 GradeBook::GradeBook(string name)
-	: courseName(name)
 {
-	//empty body
+	setCourseName(name); // required to validate the length of the name
 }
 
 string GradeBook::getCourseName() const
@@ -18,8 +17,16 @@ string GradeBook::getCourseName() const
 
 void GradeBook::setCourseName(string name)
 {
-	courseName = name;
-	cout << "Course name set to: " << courseName << endl;
+	if (name.size() <= 35)
+	{
+		courseName = name;
+		cout << "Course name set to: " << courseName << endl;
+	}
+	else 
+	{
+		courseName = name.substr(0,35);
+		cout << "Course name set to: " << courseName << endl;
+	}
 }
 
 void GradeBook::displayMessage() const
