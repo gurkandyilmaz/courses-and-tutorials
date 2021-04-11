@@ -6,10 +6,13 @@
 class GradeBook
 {
 	public:
-		explicit GradeBook(std::string name);
+		explicit GradeBook(std::string course_name, std::string instructor_name);
 		void setCourseName(std::string name);
+		void setInstructorName(std::string name);
 		void displayMessage() const;
 		std::string getCourseName() const;
+		std::string getInstructorName() const;
 	private:
 		std::string courseName;
+		std::string instructorName;
 };
