@@ -14,4 +14,9 @@ Some of the exercises are listed below:
 - **ch07**: Exercises related to the chapter *C Pointers*
 - **ch08**: Exercises related to the chapter *C Characters and Strings*
 - **ch10**: Exercises related to the chapter *Structures, Unions, Bit Manipulation and Enumeration*
+- **ch12**: Exercises related to the chapter *C Data Structures*
+- **ch15**: Exercises related to the chapter *C++ as a Better C; Introducing Object Technology*
+- **ch16**: Exercises related to the chapter *Introduction to Classes, Objects and Strings*
+
+
 
