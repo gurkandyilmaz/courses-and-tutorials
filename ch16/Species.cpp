@@ -55,22 +55,22 @@ void Species::setCountry(string country)
 // End mutators
 
 // Accessors
-string Species::getName()
+string Species::getName() const
 {
 	return animalName;
 }
 
-string Species::getCountry()
+string Species::getCountry() const
 {
 	return animalCountry;
 }
 
-int Species::getPopulation()
+int Species::getPopulation() const
 {
 	return animalPopulation;
 }
 
-double Species::getGrowthRate()
+double Species::getGrowthRate() const
 {
 	return animalGrowthRate;
 }

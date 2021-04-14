@@ -13,10 +13,10 @@ class Species
 		void setCountry(std::string country);
 		void setPopulation(int population);
 		void setGrowthRate(double rate);
-		std::string getName();
-		std::string getCountry();
-		int getPopulation();
-		double getGrowthRate();
+		std::string getName() const;
+		std::string getCountry() const;
+		int getPopulation() const;
+		double getGrowthRate() const;
 	private:
 		std::string animalName;
 		std::string animalCountry;
