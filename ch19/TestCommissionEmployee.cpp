@@ -1,16 +1,16 @@
-// Test the CommissionEmployee class and its member functions
+// Test the CommissionEmployee and DerivedCommissionEmployee classes and their member functions
 
 #include <iostream>
 #include <string>
 #include "CommissionEmployee.h"
+#include "DerivedCommissionEmployee.h"
 
 using namespace std;
-
 
 int main()
 {
 	CommissionEmployee employee1("James", "Franco", "147852963", 12000, .25);
-	CommissionEmployee employee2("Jennifer", "Dylan", "987852461", 25000, 1.40);
+	CommissionEmployee employee2("Jennifer", "Dylan", "987852461", 25000, 0.40);
 
 	employee1.print();
 	employee2.print();
@@ -23,4 +23,14 @@ int main()
 	
 	employee1.print();
 	employee2.print();
+
+	cout << "\n>>>>>> Testing of the derived class <<<<<<\n" << endl;
+
+	DerivedCommissionEmployee employee3("Derived", "Employee", "64685464", 20000, 0.2, 10000);
+	
+	employee3.print();
+	employee3.setBaseSalary(25000);
+	employee3.print();
+	employee3.setCommissionRate(0.8);
+	employee3.print();
 }
