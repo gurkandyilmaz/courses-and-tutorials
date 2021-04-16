@@ -58,8 +58,7 @@ void CommissionEmployee::setGrossSales(double sales)
 	}
 	else
 	{
-		cout << "Sales cannot be negative. It is set to 0." << endl;
-		grossSales = 0;
+		throw invalid_argument("Sales cannot be negative.");
 	}
 }
 
@@ -76,8 +75,7 @@ void CommissionEmployee::setCommissionRate(double ratio)
 	}
 	else
 	{
-		cout << "Ratio should be in range 0.0 <= ratio <= 1.0 It is set to 0.0" << endl;
-		commisionRate = 0.0;
+		throw invalid_argument("Ratio should be in between 0.0 and 1.0.");
 	}
 }
 
