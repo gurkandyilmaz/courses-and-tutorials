@@ -1,24 +1,21 @@
 **C/C++ Exercises**
 
-This repository contains various exercises that i have completed throughout my learning of C/C++ languages.
-Currently, i am following the book **C How to Program with an introduction to C++** by Paul Deitel and Harvey Deitel.
-The exercises were taken from the book and grouped by chapters. I have used "gcc" compiler and "clangd-11" on Ubuntu 18.04.5 LTS.
+This repository contains various exercises specifically from the book **Data Structures and Algorithm Analysis in C++** by Mark Allen Weiss.
+The exercises were grouped by chapters. 
+I have used "gcc" compiler and "clangd-11" on Ubuntu 18.04.5.
 
 Some of the exercises are listed below:
 
-- **ch02**: Exercises related to the chapter *Introduction to C Programming*
-- **ch03**: Exercises related to the chapter *Structured Program Development in C*
-- **ch04**: Exercises related to the chapter *C Program Control*
-- **ch05**: Exercises related to the chapter *C Functions*
-- **ch06**: Exercises related to the chapter *C Arrays*
-- **ch07**: Exercises related to the chapter *C Pointers*
-- **ch08**: Exercises related to the chapter *C Characters and Strings*
-- **ch10**: Exercises related to the chapter *Structures, Unions, Bit Manipulation and Enumeration*
-- **ch12**: Exercises related to the chapter *C Data Structures*
-- **ch15**: Exercises related to the chapter *C++ as a Better C; Introducing Object Technology*
-- **ch16**: Exercises related to the chapter *Introduction to Classes, Objects and Strings*
-- **ch17**: Exercises related to the chapter *Classes A Deeper Look*
-- **ch19**: Exercises related to the chapter *OOP Inheritance*
-
-
+- **ch01**: Exercises related to the chapter *Programming A General Overview*
+- **ch02**: Exercises related to the chapter *Algorithm Analysis*
+- **ch03**: Exercises related to the chapter *Lists, Stacks, Queues*
+- **ch04**: Exercises related to the chapter *Trees*
+- **ch05**: Exercises related to the chapter *Hashing*
+- **ch06**: Exercises related to the chapter *Priority Queues (Heaps)*
+- **ch07**: Exercises related to the chapter *Sorting*
+- **ch08**: Exercises related to the chapter *The Disjoint Sets Class*
+- **ch09**: Exercises related to the chapter *Graph Algorithms*
+- **ch10**: Exercises related to the chapter *Algorithm Design Techniques*
+- **ch11**: Exercises related to the chapter *Amortized Analysis*
+- **ch12**: Exercises related to the chapter *Advanced Data Structures and Implementation*
 
