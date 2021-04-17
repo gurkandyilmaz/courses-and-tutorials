@@ -1,9 +1,9 @@
-**C/C++ Exercises**
+**C++ Exercises**
 
 This repository contains various exercises that taken from the book **Data Structures and Algorithm Analysis in C++** by Mark Allen Weiss.
 The exercises were grouped by chapters. 
 
-Some of the exercises are listed below:
+Some of the chapters are listed below:
 
 - **ch01**: Exercises related to the chapter *Programming A General Overview*
 - **ch02**: Exercises related to the chapter *Algorithm Analysis*
