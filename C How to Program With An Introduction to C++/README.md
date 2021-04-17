@@ -1,8 +1,7 @@
 **C/C++ Exercises**
 
-This repository contains various exercises that i have completed throughout my learning of C/C++ languages.
-Currently, i am following the book **C How to Program with an introduction to C++** by Paul Deitel and Harvey Deitel.
-The exercises were taken from the book and grouped by chapters. I have used "gcc" compiler and "clangd-11" on Ubuntu 18.04.5 LTS.
+This repository contains various exercises that taken from the book **C How to Program with an introduction to C++** by Paul Deitel and Harvey Deitel.
+The exercises were grouped by chapters. 
 
 Some of the exercises are listed below:
 
@@ -19,6 +18,4 @@ Some of the exercises are listed below:
 - **ch16**: Exercises related to the chapter *Introduction to Classes, Objects and Strings*
 - **ch17**: Exercises related to the chapter *Classes A Deeper Look*
 - **ch19**: Exercises related to the chapter *OOP Inheritance*
-
-
 

@@ -1,8 +1,7 @@
 **C/C++ Exercises**
 
-This repository contains various exercises specifically from the book **Data Structures and Algorithm Analysis in C++** by Mark Allen Weiss.
+This repository contains various exercises that taken from the book **Data Structures and Algorithm Analysis in C++** by Mark Allen Weiss.
 The exercises were grouped by chapters. 
-I have used "gcc" compiler and "clangd-11" on Ubuntu 18.04.5.
 
 Some of the exercises are listed below:
 
