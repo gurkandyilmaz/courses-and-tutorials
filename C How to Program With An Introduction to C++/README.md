@@ -3,7 +3,7 @@
 This repository contains various exercises that taken from the book **C How to Program with an introduction to C++** by Paul Deitel and Harvey Deitel.
 The exercises were grouped by chapters. 
 
-Some of the exercises are listed below:
+Some of the chapters are listed below:
 
 - **ch02**: Exercises related to the chapter *Introduction to C Programming*
 - **ch03**: Exercises related to the chapter *Structured Program Development in C*
