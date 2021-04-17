@@ -17,6 +17,8 @@ Some of the exercises are listed below:
 - **ch12**: Exercises related to the chapter *C Data Structures*
 - **ch15**: Exercises related to the chapter *C++ as a Better C; Introducing Object Technology*
 - **ch16**: Exercises related to the chapter *Introduction to Classes, Objects and Strings*
+- **ch17**: Exercises related to the chapter *Classes A Deeper Look*
+- **ch19**: Exercises related to the chapter *OOP Inheritance*
 
 
 
