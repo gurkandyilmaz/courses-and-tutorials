@@ -1,4 +1,4 @@
-// This program implements the binary search algorithm on a non empty sorted array.
+// This program implements a recursive binary search algorithm on a non empty sorted array.
 
 #include <cstdio>
 #include <iostream>
@@ -12,10 +12,12 @@ int binary_search(const vector<int> &, int);
 int main()
 {
 	const vector<int> List {2,4,5,8,11,13,17,25,27};
-	int search_for = 19;
+	int search_for = 25;
 
 	printArray(List);
-	cout << "Found idx: " << binary_search(List, search_for) << endl;
+	printf("1 means the number is in the list. -1 means otherwise.\n");
+	printf("Number (%d) : %d", search_for, binary_search(List, search_for));
+	puts("");
 }
 
 int binary_search(const vector<int> & a, int number)
@@ -36,28 +38,19 @@ int binary_search(const vector<int> & a, int number)
 		}
 	}
 	
-//	cout << "Middle: " << middle << " left: " << left << " right: " << right << endl;
-//	for(int i = 0; i < a.size(); ++i)
-//	{
-//		cout << a[i] << " ";
-//	}
-//	cout << endl;
-
-	if (a[middle] == number)
-	{
-		return 1;
-	}
-	else if ( number < a[middle] )
+	if ( number < a[middle] )
 	{
 		return binary_search(vector <int>( a.begin(), a.begin() + middle ), number);
 	}
+
 	else if ( number > a[middle] )
 	{
 		return binary_search(vector <int>( a.begin() + middle, a.end() ), number);
 	}
+	
 	else
 	{
-		return -9999;
+		return 1;
 	}
 }
 
