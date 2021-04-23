@@ -125,34 +125,3 @@ class Vector
 		int theCapacity;
 		Object * objects;
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
