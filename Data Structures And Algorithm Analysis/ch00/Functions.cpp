@@ -18,10 +18,18 @@ int main()
 	std::cin >> base_num;
 	std::cout << "Enter the exponent: ";
 	std::cin >> power;
-	std::cout << "The built-in pow(base,power): " << pow(base_num, power) << std::endl;
-	std::cout << "The custom power_recursive(base,power): " << power_recursive(base_num, power) << std::endl;
-	std::cout << "The custom power_iterative_for(base,power): " << power_iterative_for(base_num, power) << std::endl;
-	std::cout << "The custom power_iterative_while(base,power): " << power_iterative_while(base_num, power) << std::endl;
+	
+	std::cout << "The built-in pow(base,power): ";
+	std::cout << pow(base_num, power) << std::endl;
+	
+	std::cout << "The custom power_recursive(base,power): ";
+	std::cout << power_recursive(base_num, power) << std::endl;
+	
+	std::cout << "The custom power_iterative_for(base,power): ";
+	power_iterative_for(base_num, power);
+	
+	std::cout << "The custom power_iterative_while(base,power): ";
+	power_iterative_while(base_num, power);
 
 }
 
