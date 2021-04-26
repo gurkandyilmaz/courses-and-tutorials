@@ -2,8 +2,8 @@
 
 #include <iostream>
 
-template <class T>
-T sum(T a, T b)
+template <typename T> // the same as template <class T>
+T sum(T a, T b) // T will be a generic type like int, double etc.
 {
 	T result;
 	result = a + b;
