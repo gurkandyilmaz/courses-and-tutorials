@@ -2,8 +2,6 @@
 
 #include <iostream>
 #include <cmath>
-#include <math.h>
-#include <ostream>
 
 double power_recursive(double, double);
 double power_iterative_for(double, double);
