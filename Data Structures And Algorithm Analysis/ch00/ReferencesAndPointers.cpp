@@ -3,20 +3,28 @@
 #include <iostream>
 using namespace std;
 
-void swapValues(int &, int &);
+void swapValues(int &, int &); // Call by Reference example
+void incrementValues(int * value, int increment); // pointers example
+// void printValues(const int * start); // pointers to constant values example
 
 int main()
 {
 	int x = 10, y = 5;
 
-	cout << "(x): " << x << ". The address of (x): " << &x << endl;
-	cout << "(y): " << y << ". The address of (y): " << &y << endl;
+	cout << "(x): " << x << ". The address of (x): " << &x << "\n";
+	cout << "(y): " << y << ". The address of (y): " << &y << "\n";
 
 	swapValues(x, y);
 
-	cout << "After Calling the swapValues(x,y)" << endl;
-	cout << "(x): " << x << ". The address of (x): " << &x << endl;
-	cout << "(y): " << y << ". The address of (y): " << &y << endl;
+	cout << "After Calling the swapValues(x,y)" << "\n";
+	cout << "(x): " << x << ". The address of (x): " << &x << "\n";
+	cout << "(y): " << y << ". The address of (y): " << &y << "\n";
+
+	incrementValues(&x, 7);
+	incrementValues(&y, 18);
+	cout << "After Calling incrementValues() on x and y: " << "\n";
+	cout << "(x): " << x << ". The address of (x): " << &x << "\n";
+	cout << "(y): " << y << ". The address of (y): " << &y << "\n";
 }
 
 void swapValues(int & a, int & b)
@@ -29,4 +37,9 @@ void swapValues(int & a, int & b)
 	tmp = a;
 	a = b;
 	b = tmp;
+}
+
+void incrementValues(int * number, int step)
+{
+	*number += step;
 }
