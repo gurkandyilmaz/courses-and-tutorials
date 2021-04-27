@@ -3,6 +3,7 @@
 #include <iostream>
 #include <cmath>
 
+// function prototypes, parameter names are optional in prototypes.
 double power_recursive(double, double);
 double power_iterative_for(double, double);
 double power_iterative_while(double, double);
@@ -31,8 +32,8 @@ int main()
 
 }
 
-double power_recursive(double base, double exponent)
-{
+// arguments copied into the parameters, base and exponent
+double power_recursive(double base, double exponent) {
 	if ( exponent == 0 && base != 0)
 	{
 		return 1;
