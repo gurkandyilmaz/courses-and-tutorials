@@ -5,6 +5,10 @@ The exercises were grouped by chapters.
 
 Some of the chapters are listed below:
 
+- **ch00**: Various exercises related to basics of C++, mostly taken from cpluplus.com tutorials.
+
+Chapters from the book:
+
 - **ch01**: Exercises related to the chapter *Programming A General Overview*
 - **ch02**: Exercises related to the chapter *Algorithm Analysis*
 - **ch03**: Exercises related to the chapter *Lists, Stacks, Queues*
