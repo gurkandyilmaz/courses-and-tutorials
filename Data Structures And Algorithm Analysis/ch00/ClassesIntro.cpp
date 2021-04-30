@@ -7,7 +7,7 @@ class Rectangle {
 	int height;
 	public:
 	void set_sides(int x, int y);
-	double area(int x, int y);
+	double area();
 
 };
 
@@ -18,21 +18,20 @@ void Rectangle::set_sides(int w, int h)
 	std::cout << "Width: " << width << ", Height: " << height << "\n";
 }
 
-double Rectangle::area(int a, int b)
+double Rectangle::area()
 {
-	return a*b;
+	return width*height;
 }
 
 int main()
 {
-	Rectangle rectangleA;
-	Rectangle rectangleB;
+	Rectangle rectangleA, rectangleB;
 
 	rectangleA.set_sides(3,5);
-	std::cout << "Rectangle A area: " << rectangleA.area(3,5) << "\n";
+	std::cout << "Rectangle A area: " << rectangleA.area() << "\n";
 
 	rectangleB.set_sides(4,8);
-	std::cout << "Rectangle B area: " << rectangleA.area(4,8) << "\n";
+	std::cout << "Rectangle B area: " << rectangleB.area() << "\n";
 	
 	return 0;
 }
