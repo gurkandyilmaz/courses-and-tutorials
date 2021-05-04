@@ -9,11 +9,13 @@ class CustomList
 		CustomList(); 
 		CustomList(int len);
 		void createList();
+		void insert(int element);
 		void printList() const;
 		void setLength(int len);
 		int getLength() const;
 	private:
 		int length;
+		int * elements = nullptr;
 };
 
 CustomList::CustomList()
@@ -24,25 +26,38 @@ CustomList::CustomList()
 CustomList::CustomList(int size)
 {
 	setLength(size);
+	createList();
 }
 
 void CustomList::createList()
 {
-	CustomList * ptr = new CustomList [getLength()];
+	if (getLength() == 0)
+	{
+		std::cout << "A list cannot be created with 0 length." << "\n";
+	}
+	else
+	{
+		elements = new int [getLength()];
+	}
+}
 
+void CustomList::insert(int element)
+{
+	elements[0] = element;
+	//*(elements + 0) = element;
 }
 
 void CustomList::printList() const
 {
 	if (getLength() == 0)
 	{
-		std::cout << "The length was not given so it is empty." << "\n";
+		std::cout << "No elements in the list, so it is empty." << "\n";
 	}
 	else
 	{
 		for (int i = 0; i < getLength(); ++i)
 		{
-			std::cout << "TEST" << "\t";
+			std::cout << elements[i] << "\t";
 		}
 		std::cout << "\n";
 	}
@@ -61,16 +76,18 @@ int CustomList::getLength() const
 
 int main()
 {
-	CustomList listA(3);
-	CustomList listB(4);
-	CustomList listC;
+	//CustomList listA;
+	CustomList listB(3);
+	//CustomList listC(4);
+	listB.insert(12);
 
-	std::cout << "lengthA: " << listA.getLength() << "\n";
+	//std::cout << "lengthA: " << listA.getLength() << "\n";
 	std::cout << "lengthB: " << listB.getLength() << "\n";
-	std::cout << "lengthC: " << listC.getLength() << "\n";
-	listA.printList();
+	//std::cout << "lengthC: " << listC.getLength() << "\n";
+	
+	//listA.printList();
 	listB.printList();
-	listC.printList();
+	//listC.printList();
 
 
 
