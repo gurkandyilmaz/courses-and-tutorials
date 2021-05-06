@@ -18,7 +18,7 @@ class CustomLinkedList
 		~CustomLinkedList();
 		void insertAt(int index, int element);
 		void remove(int element);
-		int & operator[] (int index);
+		int operator[] (int index);
 		friend std::ostream & operator<< (std::ostream & out, const CustomLinkedList & object);	
 	private:
 		int size;

@@ -8,7 +8,6 @@
 CustomLinkedList::CustomLinkedList()
 {
 	/* initialize an empty list ?? */
-
 }
 
 CustomLinkedList::~CustomLinkedList()
@@ -16,11 +15,29 @@ CustomLinkedList::~CustomLinkedList()
 	/* Free all the allocated memory. */
 }
 
-int & CustomLinkedList::operator[] (int index)
+void CustomLinkedList::insertAt(int index, int element)
+{
+	Node * newNode = new Node();
+	this->head = newNode;
+	newNode->next = nullptr;
+	newNode->data = element;
+}
+
+int CustomLinkedList::operator[] (int index)
 {
 	if(index < this->size)
 	{
-		/*iterate over the list find the correct node, return the data.*/
+		Node * temp = this->head;
+		for(int i = 0; i < index; ++i)
+		{
+			temp = temp->next;
+		}
+		return temp->data;
+	}
+	else
+	{
+		std::cout << "The index " << index << " out of range." << std::endl;
+		return 9999; // error code
 	}
 }
 
