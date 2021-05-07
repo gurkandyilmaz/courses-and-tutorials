@@ -3,10 +3,8 @@
 
 #include "CustomLinkedList.h"
 
-#include <exception>
 #include <iostream>
 #include <ostream>
-#include <stdexcept>
 
 CustomLinkedList::CustomLinkedList()
 {
@@ -35,7 +33,6 @@ void CustomLinkedList::insert(int index, int element)
 		{
 			Node * newNode = new Node();
 			Node * temp = this->head;
-			
 			newNode->data = element;
 		
 			for (int i = 0; i < index - 1; i++)
@@ -59,7 +56,6 @@ void CustomLinkedList::insertAtHead(int element)
 {
 	Node * newNode = new Node();
 	newNode->data = element;
-	
 	if ( isEmpty() )
 	{
 		newNode->next = nullptr;
@@ -69,7 +65,6 @@ void CustomLinkedList::insertAtHead(int element)
 		Node * temp = this->head;
 		newNode->next = temp;
 	}
-
 	this->head = newNode;
 	this->size++;
 }
@@ -78,7 +73,6 @@ void CustomLinkedList::insertAtTail(int element)
 {
 	Node * newNode = new Node();
 	newNode->data = element;
-	
 	if ( isEmpty() )
 	{
 		newNode->next = nullptr;
@@ -94,13 +88,23 @@ void CustomLinkedList::insertAtTail(int element)
 		temp->next = newNode;
 		newNode->next = nullptr;
 	}
-
 	this->size++;
 }
 
-bool CustomLinkedList::isEmpty()
+void CustomLinkedList::remove(int element)
 {
-	return this->size == 0;
+	Node * temp = this->head;
+	Node * node;
+	while(temp->data != element)
+	{
+		if (temp->next->data == element)
+		{
+			node = temp->next;
+			break;
+		}
+		temp = temp->next;
+	}
+	temp->next = node->next;
 }
 
 int CustomLinkedList::operator[] (int index)
@@ -140,4 +144,9 @@ std::ostream & operator<< (std::ostream & out, const CustomLinkedList & object)
 	}
 	out << "<-- TAIL ";
 	return out;
+}
+
+bool CustomLinkedList::isEmpty()
+{
+	return this->size == 0;
 }
