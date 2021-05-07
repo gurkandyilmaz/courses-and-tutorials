@@ -10,14 +10,49 @@
 
 CustomLinkedList::CustomLinkedList()
 {
-	/* initialize an empty list ?? */
 	this->size = 0;
 	this->head = nullptr;
 }
 
 CustomLinkedList::~CustomLinkedList()
 {
-	/* Free all the allocated memory. */
+	//delete [] this->head;
+}
+
+void CustomLinkedList::insert(int index, int element)
+{
+	if ( index == 0 )
+	{
+		this->insertAtHead(element);
+	}
+	else if (index == this->size - 1) 
+	{
+		this->insertAtTail(element);
+	}
+	else
+	{
+		if ( !this->isEmpty() )
+		{
+			Node * newNode = new Node();
+			Node * temp = this->head;
+			
+			newNode->data = element;
+		
+			for (int i = 0; i < index - 1; i++)
+			{
+				temp = temp->next;	
+			}
+			newNode->next = temp->next;
+			temp->next = newNode;
+			this->size++;
+		}
+		else
+		{
+			std::cerr << "An exception occured at insert. The list is empty. Index " << index;
+			std::cerr << " Not applicable!" << std::endl;
+			exit(505);
+		}
+	}
 }
 
 void CustomLinkedList::insertAtHead(int element)
@@ -58,7 +93,6 @@ void CustomLinkedList::insertAtTail(int element)
 		}
 		temp->next = newNode;
 		newNode->next = nullptr;
-		//delete [] temp;
 	}
 
 	this->size++;
@@ -91,7 +125,7 @@ int CustomLinkedList::operator[] (int index)
 	{
 
 		std::cerr << "An exception occured. " << index << e.what() << std::endl;
-		return 9999; // error code
+		exit(505);
 	}
 }
 

@@ -16,13 +16,14 @@ class CustomLinkedList
 	public:
 		CustomLinkedList();
 		~CustomLinkedList();
+		void insert(int index, int element);
 		void insertAtHead(int element);
 		void insertAtTail(int element);
 		void remove(int element);
-		bool isEmpty();
 		int operator[] (int index);
 		friend std::ostream & operator<< (std::ostream & out, const CustomLinkedList & object);	
 	private:
+		bool isEmpty();
 		int size;
 		Node * head;
 };
