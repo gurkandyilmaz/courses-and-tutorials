@@ -1,9 +1,7 @@
-# Jupyter
-"_Learning Data Mining with Python 2015_"
- 
-  This Repository includes Examples/implementations of data mining algorithms using 
-  * Pandas 
-  * Numpy
-  * Matplotlib
-  * scikit-learn.
+# Various Jupyter Notebooks
+This Repository includes the notebook implementations of the models taken from different books I had studied. <br /><br />
 
+List of Books:
+
+- [**Learning Data Mining with Python, Robert Layton**](https://github.com/gurkandyilmaz/jupyter_notebooks)
+ 
