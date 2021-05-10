@@ -1,8 +1,9 @@
-# Python
-*Various Python code/script examples.* <br/>
+# Simple Python Projects
 
-1-) calculator: A Calculator with a simple GUI.<br/> 
+**List of Projects:**
 
-2-) cognitus_ai_api : Makes an API call for the cognitus.ai services then writes the results to txt and excel files.<br/>
+- **calculator**: A Calculator with a simple GUI.<br /> 
 
-3-) plot_linear_regression : Draws a Linear Regression line on a GUI window based on the points clicked by the user.<br/>
+- **cognitus_ai_api** : Makes an API call for the cognitus.ai services then writes the results to txt and excel files.<br />
+
+- **plot_linear_regression** : Draws a Linear Regression line on a GUI window based on the points clicked by the user.<br />
