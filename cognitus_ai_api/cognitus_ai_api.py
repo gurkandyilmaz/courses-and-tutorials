@@ -10,7 +10,7 @@ class Cognitus():
                 }
         
         self.header_ = {
-                "Authorization": "Token f55d535cb047035aea0da05dcf44bac3a5f2ea33",
+                "Authorization": "Token XXXXXXXX",
                 "Content-type": "application/json"
                 }
         
