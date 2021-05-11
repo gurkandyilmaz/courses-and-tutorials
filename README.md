@@ -8,7 +8,7 @@ A collection of the scripts/notebooks written/implemented for the courses taken 
 
 >Tutorials
 
-- Tutorials A <br/><br/>
+- Python Projects <br/><br/>
 - Tutorials B <br/><br/>
 
 
