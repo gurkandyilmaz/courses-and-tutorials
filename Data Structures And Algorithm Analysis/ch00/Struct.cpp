@@ -1,5 +1,5 @@
 // This program demonstrates the usage of a data structure called Struct 
-// and its one ıf use with pointers.
+// and its one of use with pointers.
 
 #include <iostream>
 #include <string>
