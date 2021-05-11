@@ -3,16 +3,12 @@ A collection of the scripts/notebooks written/implemented for the courses taken 
 
 >Courses
 
-- MIT 60001/60002 Courses <br/><br/>
+- [MIT 60001/60002 Courses](https://github.com/gurkandyilmaz/courses-and-tutorials/tree/master/mit-60001-60002) <br/><br/>
 
 
 >Tutorials
 
-- Python Projects <br/><br/>
-- Tutorials B <br/><br/>
+- [Python Projects](https://github.com/gurkandyilmaz/courses-and-tutorials/tree/master/python_projects) <br/><br/>
+- [Jupyter Notebooks](https://github.com/gurkandyilmaz/courses-and-tutorials/tree/master/jupyter_notebooks) <br/><br/>
 
 
->Books
-
-- Book A <br/><br/>
-- Book B <br/><br/>
