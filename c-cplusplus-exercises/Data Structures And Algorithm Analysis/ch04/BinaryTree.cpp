@@ -60,6 +60,7 @@ void BinaryTree::insert(int item)
 		this->nodes.pop();
 		//std::cout << "SIZE: " << this->nodes.size() << std::endl;
 	}
+	this->tracker = this->nodes.front();
 	this->size++;
 }
 

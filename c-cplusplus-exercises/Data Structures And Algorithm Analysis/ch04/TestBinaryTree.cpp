@@ -10,8 +10,12 @@ int main()
 	TreeA.insert(55);
 	TreeA.insert(66);
 	TreeA.insert(77);
+	TreeA.insert(88);
 	//TreeA.insert(88);
-	std::cout << TreeA.getRoot()->data << TreeA.getRoot()->left->data << TreeA.getRoot()->right->data <<std::endl;
+	std::cout << TreeA.getRoot()->data << "\t";
+	std::cout << TreeA.getRoot()->left->data << "\t";
+	std::cout << TreeA.getRoot()->right->data << "\t";
+	std::cout << TreeA.getRoot()->left->left->data << std::endl;
 	//std::cout << TreeA << std::endl;
 }
 
