@@ -1,4 +1,4 @@
-# Machine Learning Courses/Books
+# Machine Learning Books
 
 This Repository includes the codes for the exercises related to Machine Learning books. <br /><br />
 
