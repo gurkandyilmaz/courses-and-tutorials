@@ -11,6 +11,7 @@
 
 
 #include "BinaryTree.h"
+#include <iostream>
 #include <iterator>
 #include <ostream>
 
@@ -38,30 +39,37 @@ void BinaryTree::insert(int item)
 	{
 		this->root = newNode;
 		this->tracker = this->root;
-		this->nodes.push(this->root->left);
-		this->nodes.push(this->root->right);
+		this->nodes.push(this->tracker);
+		//this->nodes.push(this->root->right);
 	}
 	else
 	{
 		//std::cout << "HERE: " << this->nodes.size() << "--"<< newNode->data <<std::endl;
 		Node * temp = this->nodes.front();
-		temp = newNode;
-		if (this->size % 2 == 1)
+		this->nodes.pop();
+		if ( temp == nullptr )
 		{
-			this->tracker->left = temp;
+			temp->left = newNode;
+			this->nodes.push(temp->right);
+			//this->tracker->left = temp;
 		}
 		else
 		{
-			this->tracker->right = temp;
+			//this->tracker->right = temp;
+			this->nodes.push( temp->left );
+			this->nodes.push( temp->right );
 		}
 		//std::cout << "TEMP: "<< temp->data << "---" << temp->left<<"---" << temp->right <<std::endl;
-		this->nodes.push(temp->left);
-		this->nodes.push(temp->right);
-		this->nodes.pop();
-		//std::cout << "SIZE: " << this->nodes.size() << std::endl;
+		std::cout << "Tracker: " << this->nodes.front() << std::endl;
+		//this->nodes.push(temp->left);
+		//this->nodes.push(temp->right);
+		//this->tracker = this->nodes.front();
 	}
-	this->tracker = this->nodes.front();
+	std::cout << "Before: " << this->tracker->data << "\t";
+	//this->tracker = this->nodes.front();
+	//std::cout << "After: " << this->tracker->data << "\n";
 	this->size++;
+	std::cout << "Size: " << this->size << "\n";
 }
 
 bool BinaryTree::isEmpty() const
