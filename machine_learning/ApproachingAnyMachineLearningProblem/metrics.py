@@ -188,6 +188,20 @@ def weighted_f1(y_true, y_pred):
 
 # Multi-class Metrics: END
 
+# Confusion Matrix: BEGIN
+def plot_confusion_matrix(y_true, y_pred):
+    import seaborn
+    cm = metrics.confusion_matrix(y_true, y_pred)
+
+    plt.figure(figsize=(10,10))
+    cmap = seaborn.cubehelix_palette(50, hue=0.05, light=0.9, dark=0, rot=0, as_cmap=True)
+    seaborn.set(font_scale=2.5)
+    seaborn.heatmap(cm, annot=True, cmap=cmap, cbar=False)
+    plt.ylabel("Actual Labels", fontsize=20)
+    plt.xlabel("Predicted Labels", fontsize=20)
+    plt.show()
+
+# Confusion Matrix: END
 
 # Helpers: BEGIN
 def apply_threshold(array, threshold = 0.5):
@@ -251,7 +265,7 @@ if __name__ == "__main__":
 
     # Multi-class ouputs, 3 classes.
     y_true = [0,1,1,2,2,2,0,0,0,1]
-    y_pred = [1,0,1,2,2,1,2,1,0,1]
+    y_pred = [0,0,1,2,2,1,2,1,0,1]
 
 #    print("Sklearn Macro-Averaged Precision: ", metrics.precision_score(y_true, y_pred, average="macro"))
 #    print("Custom Macro-Averaged Precision: ", macro_averaged_precision(y_true, y_pred))
@@ -260,5 +274,7 @@ if __name__ == "__main__":
 #    print("Sklearn Weighted Precision: ", metrics.precision_score(y_true, y_pred, average="weighted"))
 #    print("Custom Weighted Precision: ", weighted_precision(y_true, y_pred))
 
-    print("Sklearn Macro-Averaged Recall: ", metrics.recall_score(y_true, y_pred, average="macro"))
-    print("Custom Macro-Averaged Recall: ", macro_averaged_recall(y_true, y_pred))
+#    print("Sklearn Macro-Averaged Recall: ", metrics.recall_score(y_true, y_pred, average="macro"))
+#    print("Custom Macro-Averaged Recall: ", macro_averaged_recall(y_true, y_pred))
+
+    plot_confusion_matrix(y_true, y_pred)
