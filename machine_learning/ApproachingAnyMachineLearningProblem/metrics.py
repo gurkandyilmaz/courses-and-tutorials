@@ -67,8 +67,6 @@ def precision(y_true, y_pred):
     try:
         prec = tp / (tp+fp)
     except ZeroDivisionError:
-        #print("Zero Division Occured. Precision set to 0.")
-        #print(err)
         return 1.0
     return prec
 
@@ -77,6 +75,7 @@ def recall(y_true, y_pred):
     tp = true_positive(y_true, y_pred)
     fn = false_negative(y_true, y_pred)
     recall = tp / (tp+fn)
+
     return recall 
 
 def f1(y_true, y_pred):
@@ -87,6 +86,7 @@ def f1(y_true, y_pred):
     fp = false_positive(y_true, y_pred)
     fn = false_negative(y_true, y_pred)
     f1 = 2*tp / (2*tp + fp + fn)
+    
     return f1
 
 def log_loss(y_true, y_pred_proba):
@@ -106,6 +106,7 @@ def log_loss(y_true, y_pred_proba):
     plt.xlabel("proba")
     plt.ylabel("losses")
     plt.show()
+    
     return np.mean(losses)
 
 # Helpers BEGIN
@@ -158,12 +159,10 @@ if __name__ == "__main__":
 #    print("Custom Accuracy: ", accuracy(y_true, y_pred))
 #    print("Sklearn Accuracy: ", accuracy_score(y_true, y_pred))
 #    print("Accuracy V2: ", accuracy_v2(y_true, y_pred))
-#    print("----------------------")
     print("Custom Precision: ", precision(y_true, y_pred))
     print("Sklearn Precision: ", metrics.precision_score(y_true, y_pred))
     print("Custom Recall: ", recall(y_true, y_pred))
     print("Sklearn Recall: ", metrics.recall_score(y_true, y_pred))
-#    plot_precision_recall(y_true, y_pred)
     print("Custom F1: ", f1(y_true, y_pred))
     print("Sklearn F1: ", metrics.f1_score(y_true, y_pred))
     print("Custom Log loss: ", log_loss(y_true, y_pred_proba))
