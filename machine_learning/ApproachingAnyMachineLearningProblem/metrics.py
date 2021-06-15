@@ -109,7 +109,87 @@ def log_loss(y_true, y_pred_proba):
     
     return np.mean(losses)
 
-# Helpers BEGIN
+# Multi-class Metrics: BEGIN
+def macro_averaged_precision(y_true, y_pred):
+    """Calculate precision for all classes individually and then average them."""
+    num_labels = len(np.unique(y_true))
+    precisions = []
+    for label in range(num_labels):
+        temp_true = [1 if data == label else 0 for data in y_true]
+        temp_pred = [1 if data == label else 0 for data in y_pred]
+        precisions.append(precision(temp_true, temp_pred))
+
+    return np.mean(precisions)
+
+def micro_averaged_precision(y_true, y_pred):
+    """Calculate class wise true positive and false positive, add them to get overall precision."""
+    num_labels = len(np.unique(y_true)) 
+    tp, fp = 0, 0
+    for label in range(num_labels):
+        temp_true = [1 if data == label else 0 for data in y_true]
+        temp_pred = [1 if data == label else 0 for data in y_pred]
+        tp += true_positive(temp_true, temp_pred)
+        fp += false_positive(temp_true, temp_pred)
+    
+    return tp / (tp + fp)
+
+def weighted_precision(y_true, y_pred):
+    """Same as macro-averaged but average depends on the number of items in each class."""
+    from collections import Counter
+    num_labels = len(np.unique(y_true))
+    label_counts = Counter(y_true)
+    
+    precision, tp, fp = 0, 0, 0
+
+    for label in range(num_labels):
+        temp_true = [1 if data == label else 0 for data in y_true]
+        temp_pred = [1 if data == label else 0 for data in y_pred]
+        tp = true_positive(temp_true, temp_pred)
+        fp = false_positive(temp_true, temp_pred)
+        
+        temp_precision = tp / (tp + fp)
+        weighted_precision = label_counts[label] * temp_precision
+        precision += weighted_precision
+
+    return precision / len(y_true)
+
+def macro_averaged_recall(y_true, y_pred):
+    """Calculate recall for each individual label then average them."""
+    num_labels = len(np.unique(y_true))
+    recall_scores = []
+    for label in range(num_labels):
+        temp_true = [1 if data == label else 0 for data in y_true]
+        temp_pred = [1 if data == label else 0 for data in y_pred]
+        recall_scores.append(recall(temp_true, temp_pred)) 
+
+    return np.mean(recall_scores)
+
+def micro_averaged_recall(y_true, y_pred):
+    #TODO
+    pass
+
+def weighted_recall(y_true, y_pred):
+    #TODO
+    pass
+
+def macro_averaged_f1(y_true, y_pred):
+    #TODO
+    pass
+
+def micro_averaged_f1(y_true, y_pred):
+    #TODO
+    pass
+
+def weighted_f1(y_true, y_pred):
+    #TODO
+    pass
+
+
+
+# Multi-class Metrics: END
+
+
+# Helpers: BEGIN
 def apply_threshold(array, threshold = 0.5):
     """
         Convert the values in the array either to 0 or 1 depending on the threshold. 
@@ -149,22 +229,36 @@ def plot_precision_recall(y_true, y_pred_prob):
     plt.xlabel("Recall")
     plt.show()
 
-# Helpers END
+# Helpers: END
 
 if __name__ == "__main__":
-    y_true = [1,0,1,1,0,0,0,0,1,0,1,0,0,1,0,1,0,1,1,0]
-    y_pred = [1,0,1,0,1,0,1,1,0,1,1,0,0,1,0,1,1,0,1,0]
-    y_pred_proba = [0.1, 0.98, 0.9, 0.15, 0.33, 0.42, 0.5, 0.16, 0.8, 0.7, 
-                    0.8, 0.25, 0.77, 0.4, 0.6, 0.3, 0.56, 0.85, 0.97, 0.22]
+    # Binary Output Case
+#    y_true = [1,0,1,1,0,0,0,0,1,0,1,0,0,1,0,1,0,1,1,0]
+#    y_pred = [1,0,1,0,1,0,1,1,0,1,1,0,0,1,0,1,1,0,1,0]
+#    y_pred_proba = [0.1, 0.98, 0.9, 0.15, 0.33, 0.42, 0.5, 0.16, 0.8, 0.7, 
+#                    0.8, 0.25, 0.77, 0.4, 0.6, 0.3, 0.56, 0.85, 0.97, 0.22]
 #    print("Custom Accuracy: ", accuracy(y_true, y_pred))
 #    print("Sklearn Accuracy: ", accuracy_score(y_true, y_pred))
 #    print("Accuracy V2: ", accuracy_v2(y_true, y_pred))
-    print("Custom Precision: ", precision(y_true, y_pred))
-    print("Sklearn Precision: ", metrics.precision_score(y_true, y_pred))
-    print("Custom Recall: ", recall(y_true, y_pred))
-    print("Sklearn Recall: ", metrics.recall_score(y_true, y_pred))
-    print("Custom F1: ", f1(y_true, y_pred))
-    print("Sklearn F1: ", metrics.f1_score(y_true, y_pred))
-    print("Custom Log loss: ", log_loss(y_true, y_pred_proba))
-    print("Sklearn Log loss: ", metrics.log_loss(y_true, y_pred_proba))
+#    print("Custom Precision: ", precision(y_true, y_pred))
+#    print("Sklearn Precision: ", metrics.precision_score(y_true, y_pred))
+#    print("Custom Recall: ", recall(y_true, y_pred))
+#    print("Sklearn Recall: ", metrics.recall_score(y_true, y_pred))
+#    print("Custom F1: ", f1(y_true, y_pred))
+#    print("Sklearn F1: ", metrics.f1_score(y_true, y_pred))
+#    print("Custom Log loss: ", log_loss(y_true, y_pred_proba))
+#    print("Sklearn Log loss: ", metrics.log_loss(y_true, y_pred_proba))
 
+    # Multi-class ouputs, 3 classes.
+    y_true = [0,1,1,2,2,2,0,0,0,1]
+    y_pred = [1,0,1,2,2,1,2,1,0,1]
+
+#    print("Sklearn Macro-Averaged Precision: ", metrics.precision_score(y_true, y_pred, average="macro"))
+#    print("Custom Macro-Averaged Precision: ", macro_averaged_precision(y_true, y_pred))
+#    print("Sklearn Micro-Averaged Precision: ", metrics.precision_score(y_true, y_pred, average="micro"))
+#    print("Custom Micro-Averaged Precision: ", micro_averaged_precision(y_true, y_pred))
+#    print("Sklearn Weighted Precision: ", metrics.precision_score(y_true, y_pred, average="weighted"))
+#    print("Custom Weighted Precision: ", weighted_precision(y_true, y_pred))
+
+    print("Sklearn Macro-Averaged Recall: ", metrics.recall_score(y_true, y_pred, average="macro"))
+    print("Custom Macro-Averaged Recall: ", macro_averaged_recall(y_true, y_pred))
