@@ -2,6 +2,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn import metrics
+from collections import Counter
 
 def accuracy(y_true, y_pred):
     """ If the data is skewed accuracy may not be the best option."""
@@ -135,7 +136,6 @@ def micro_averaged_precision(y_true, y_pred):
 
 def weighted_precision(y_true, y_pred):
     """Same as macro-averaged but average depends on the number of items in each class."""
-    from collections import Counter
     num_labels = len(np.unique(y_true))
     label_counts = Counter(y_true)
     
@@ -165,8 +165,17 @@ def macro_averaged_recall(y_true, y_pred):
     return np.mean(recall_scores)
 
 def micro_averaged_recall(y_true, y_pred):
-    #TODO
-    pass
+    """Calculate class wise true positive and false positive, add them to get overall precision."""
+    num_labels = len(np.unique(y_true)) 
+    tp, fn = 0, 0
+    for label in range(num_labels):
+        temp_true = [1 if data == label else 0 for data in y_true]
+        temp_pred = [1 if data == label else 0 for data in y_pred]
+        tp += true_positive(temp_true, temp_pred)
+        fn += false_negative(temp_true, temp_pred)
+    
+    return tp / (tp + fn)
+
 
 def weighted_recall(y_true, y_pred):
     #TODO
@@ -276,5 +285,6 @@ if __name__ == "__main__":
 
 #    print("Sklearn Macro-Averaged Recall: ", metrics.recall_score(y_true, y_pred, average="macro"))
 #    print("Custom Macro-Averaged Recall: ", macro_averaged_recall(y_true, y_pred))
-
-    plot_confusion_matrix(y_true, y_pred)
+    print("Sklearn Micro-Averaged Recall: ", metrics.recall_score(y_true, y_pred, average="micro"))
+    print("Custom Micro-Averaged Recall: ", micro_averaged_recall(y_true, y_pred))
+#    plot_confusion_matrix(y_true, y_pred)
