@@ -178,8 +178,21 @@ def micro_averaged_recall(y_true, y_pred):
 
 
 def weighted_recall(y_true, y_pred):
-    #TODO
-    pass
+    """Same as macro-averaged recall but average depends on the number of items in each class."""
+    num_labels = len(np.unique(y_true))
+    label_counts = Counter(y_true)
+    recall, tp, fn = 0,0,0
+    for label in range(num_labels):
+        temp_true = [1 if data == label else 0 for data in y_true]
+        temp_pred = [1 if data ==label else 0 for data in y_pred]
+        tp = true_positive(temp_true, temp_pred)
+        fn = false_negative(temp_true, temp_pred)
+
+        temp_recall = tp / (tp+fn)
+        weighted_recall = temp_recall * label_counts[label]
+        recall += weighted_recall
+
+    return recall / len(y_true)
 
 def macro_averaged_f1(y_true, y_pred):
     #TODO
@@ -273,8 +286,8 @@ if __name__ == "__main__":
 #    print("Sklearn Log loss: ", metrics.log_loss(y_true, y_pred_proba))
 
     # Multi-class ouputs, 3 classes.
-    y_true = [0,1,1,2,2,2,0,0,0,1]
-    y_pred = [0,0,1,2,2,1,2,1,0,1]
+    y_true = [0,1,1,2,2,2,0,0,0,1,1,1,1]
+    y_pred = [1,0,1,2,2,1,2,1,1,1,0,0,0]
 
 #    print("Sklearn Macro-Averaged Precision: ", metrics.precision_score(y_true, y_pred, average="macro"))
 #    print("Custom Macro-Averaged Precision: ", macro_averaged_precision(y_true, y_pred))
@@ -287,4 +300,11 @@ if __name__ == "__main__":
 #    print("Custom Macro-Averaged Recall: ", macro_averaged_recall(y_true, y_pred))
     print("Sklearn Micro-Averaged Recall: ", metrics.recall_score(y_true, y_pred, average="micro"))
     print("Custom Micro-Averaged Recall: ", micro_averaged_recall(y_true, y_pred))
+    print("Sklearn Weighted Recall: ", metrics.recall_score(y_true, y_pred, average="weighted"))
+    print("Custom Weighted Recall: ", weighted_recall(y_true, y_pred))
+
 #    plot_confusion_matrix(y_true, y_pred)
+
+
+
+
