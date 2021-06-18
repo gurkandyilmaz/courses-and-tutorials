@@ -148,8 +148,7 @@ def weighted_precision(y_true, y_pred):
         fp = false_positive(temp_true, temp_pred)
         
         temp_precision = tp / (tp + fp)
-        weighted_precision = label_counts[label] * temp_precision
-        precision += weighted_precision
+        precision += label_counts[label] * temp_precision
 
     return precision / len(y_true)
 
@@ -184,28 +183,59 @@ def weighted_recall(y_true, y_pred):
     recall, tp, fn = 0,0,0
     for label in range(num_labels):
         temp_true = [1 if data == label else 0 for data in y_true]
-        temp_pred = [1 if data ==label else 0 for data in y_pred]
+        temp_pred = [1 if data == label else 0 for data in y_pred]
         tp = true_positive(temp_true, temp_pred)
         fn = false_negative(temp_true, temp_pred)
 
         temp_recall = tp / (tp+fn)
-        weighted_recall = temp_recall * label_counts[label]
-        recall += weighted_recall
+        recall += temp_recall * label_counts[label]
 
     return recall / len(y_true)
 
 def macro_averaged_f1(y_true, y_pred):
-    #TODO
-    pass
+    """Calculate f1 score for each label separately then average them."""
+    num_labels = len(np.unique(y_true))
+    f1_scores = []
+    tp, fp, fn = 0,0,0
+    for label in range(num_labels):
+        temp_true = [1 if data == label else 0 for data in y_true]
+        temp_pred = [1 if data == label else 0 for data in y_pred]
+        tp = true_positive(temp_true, temp_pred)
+        fp = false_positive(temp_true, temp_pred)
+        fn = false_negative(temp_true, temp_pred)
+        temp_f1 = 2*tp / (2*tp + fp + fn)
+        f1_scores.append(temp_f1)
+
+    return np.mean(f1_scores)
 
 def micro_averaged_f1(y_true, y_pred):
-    #TODO
-    pass
+    """Add true positive, false positive and false negative for each label then calculate f1."""
+    num_labels = len(np.unique(y_true))
+    tp, fp, fn = 0,0,0
+    for label in range(num_labels):
+        temp_true = [1 if data == label else 0 for data in y_true]
+        temp_pred = [1 if data == label else 0 for data in y_pred]
+        tp += true_positive(temp_true, temp_pred)
+        fp += false_positive(temp_true, temp_pred)
+        fn += false_negative(temp_true, temp_pred)
+    
+    return 2*tp / (2*tp + fp + fn)
 
 def weighted_f1(y_true, y_pred):
-    #TODO
-    pass
-
+    """Similar to macro f1 but multiply f1 by the label count of the corresponding label."""
+    num_labels = len(np.unique(y_true))
+    label_counts = Counter(y_true)
+    f1, tp, fp, fn = 0,0,0,0
+    for label in range(num_labels):
+        temp_true = [1 if data == label else 0 for data in y_true]
+        temp_pred = [1 if data == label else 0 for data in y_pred]
+        tp = true_positive(temp_true, temp_pred)
+        fp = false_positive(temp_true, temp_pred)
+        fn = false_negative(temp_true, temp_pred)
+        temp_f1 = 2*tp / (2*tp + fp + fn)
+        f1 += temp_f1 * label_counts[label]        
+    
+    return f1 / len(y_true)
 
 
 # Multi-class Metrics: END
@@ -298,10 +328,17 @@ if __name__ == "__main__":
 
 #    print("Sklearn Macro-Averaged Recall: ", metrics.recall_score(y_true, y_pred, average="macro"))
 #    print("Custom Macro-Averaged Recall: ", macro_averaged_recall(y_true, y_pred))
-    print("Sklearn Micro-Averaged Recall: ", metrics.recall_score(y_true, y_pred, average="micro"))
-    print("Custom Micro-Averaged Recall: ", micro_averaged_recall(y_true, y_pred))
-    print("Sklearn Weighted Recall: ", metrics.recall_score(y_true, y_pred, average="weighted"))
-    print("Custom Weighted Recall: ", weighted_recall(y_true, y_pred))
+#    print("Sklearn Micro-Averaged Recall: ", metrics.recall_score(y_true, y_pred, average="micro"))
+#    print("Custom Micro-Averaged Recall: ", micro_averaged_recall(y_true, y_pred))
+#    print("Sklearn Weighted Recall: ", metrics.recall_score(y_true, y_pred, average="weighted"))
+#    print("Custom Weighted Recall: ", weighted_recall(y_true, y_pred))
+    print("Sklearn Macro-Averaged F1: ", metrics.f1_score(y_true, y_pred, average="macro"))
+    print("Custom Macro-Averaged F1: ", macro_averaged_f1(y_true, y_pred))
+    print("Sklearn Micro-Averaged F1: ", metrics.f1_score(y_true, y_pred, average="micro"))
+    print("Custom Micro-Averaged F1: ", micro_averaged_f1(y_true, y_pred))
+    print("Sklearn Weighted F1: ", metrics.f1_score(y_true, y_pred, average="weighted"))
+    print("Custom Weighted F1: ", weighted_f1(y_true, y_pred))
+
 
 #    plot_confusion_matrix(y_true, y_pred)
 
