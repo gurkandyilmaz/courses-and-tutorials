@@ -29,7 +29,7 @@ if __name__ == "__main__":
     tsne_df = pd.DataFrame(np.column_stack((transformed_data, targets[:3000])), columns=["x", "y", "targets"])
     tsne_df.loc[:, "targets"] = tsne_df.targets.astype(int)
     
-    grid = seaborn.FacetGrid(tsne_df, hue="targets", size=8)
+    grid = seaborn.FacetGrid(tsne_df, hue="targets", height=8)
     grid.map(plt.scatter, "x", "y").add_legend()
     plt.show()
 
