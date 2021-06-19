@@ -1,11 +1,11 @@
 """Custom implementations for metrics in classification and regression tasks."""
 import numpy as np
 import matplotlib.pyplot as plt
-from numpy.lib.function_base import average
 from sklearn import metrics
 from collections import Counter
 
 class CustomMetrics:
+    """Metrics for binary, multiclass classification and regression."""
     def __init__(self):
         pass
 
@@ -85,7 +85,7 @@ class CustomMetrics:
                 temp_pred = [1 if data == label else 0 for data in y_pred]
                 precisions.append(self.precision(temp_true, temp_pred, average="binary"))
 
-            return np.mean(precisions)
+            return sum(precisions) / len(precisions)
         
         elif average == "micro":
             """Calculate class wise true positive and false positive, add them to get overall precision."""
@@ -131,7 +131,7 @@ class CustomMetrics:
                 temp_pred = [1 if data == label else 0 for data in y_pred]
                 recall_scores.append(self.recall(temp_true, temp_pred, average="binary")) 
         
-            return np.mean(recall_scores)
+            return sum(recall_scores) / len(recall_scores)
 
         elif average == "micro":
             """Calculate class wise true positive and false positive, add them to get overall precision."""
@@ -186,7 +186,7 @@ class CustomMetrics:
                 temp_f1 = 2*tp / (2*tp + fp + fn)
                 f1_scores.append(temp_f1)
         
-            return np.mean(f1_scores)
+            return sum(f1_scores) / len(f1_scores)
 
 
         elif average == "micro":
@@ -234,7 +234,68 @@ class CustomMetrics:
             plt.ylabel("losses")
             plt.show()
         
-        return np.mean(losses)
+        return sum(losses) / len(losses)
+
+    def mean_absolute_error(self, y_true, y_pred):
+        error = 0.0
+        for y_t, y_p in zip(y_true, y_pred):
+            error += abs(y_t - y_p)
+        
+        return error / len(y_true)
+
+    def mean_squared_error(self, y_true, y_pred, square_root=False):
+        error = 0.0
+        for y_t, y_p in zip(y_true, y_pred):
+            error += (y_t - y_p)**2
+
+        if not square_root:
+            # return mean squared error
+            return error / len(y_true)
+        else:
+            # return root mse
+            return (error / len(y_true))**0.5
+    
+    def r2(self, y_true, y_pred):
+        """Calculates the coefficient of determination."""
+        yt_mean = sum(y_true) / len(y_true)
+        numerator, denominator = 0, 0
+        for y_t, y_p in zip(y_true, y_pred):
+            numerator += (y_t - y_p)**2
+            denominator += (y_t - yt_mean)**2
+
+        return 1 - (numerator/denominator)
+
+
+class MultiLabelMetrics:
+    def __init(self):
+        pass
+    
+    def precision_at_k(self, y_true, y_pred, k):
+        """Calculates precision at k for a single sample."""
+        if k == 0:
+            return 0
+        
+        y_pred = y_pred[:k]
+        pred_set = set(y_pred)
+        true_set = set(y_true)
+        common = pred_set.intersection(true_set)
+        
+        return len(common) / len(y_pred[:k])
+    
+    def avg_precision_at_k(self, y_true, y_pred, k):
+        """Calculates the average precision at k for a single sample."""
+        preds = []
+        for i in range(1, k+1):
+            preds.append(self.precision_at_k(y_true, y_pred, i))
+        
+        return np.mean(preds)
+
+    def mean_avg_precision_at_k(self, y_true, y_pred, k):
+        apk_values = [] 
+        for y_t, y_p in zip(y_true, y_pred):
+            apk_values.append(self.avg_precision_at_k(y_t, y_p, k))
+    
+        return np.mean(apk_values)
 
 # Confusion Matrix: BEGIN
 def plot_confusion_matrix(y_true, y_pred):
@@ -295,49 +356,29 @@ def plot_precision_recall(y_true, y_pred_prob):
 
 if __name__ == "__main__":
     custom_metrics = CustomMetrics()
+    multilabel_metrics = MultiLabelMetrics() 
 
-# Binary Output Case
+#   Binary Output Case
 #    y_true = [1,0,1,1,0,0,0,0,1,0,1,0,0,1,0,1,0,1,1,0]
 #    y_pred = [1,1,1,0,1,0,1,1,0,1,1,0,0,1,1,1,1,0,1,0]
 #    y_pred_proba = [0.1, 0.98, 0.9, 0.15, 0.33, 0.42, 0.5, 0.16, 0.8, 0.7, 
 #                    0.8, 0.25, 0.77, 0.4, 0.6, 0.3, 0.56, 0.85, 0.97, 0.22]
-#    print("Sklearn Accuracy: ", metrics.accuracy_score(y_true, y_pred))
-#    print("Custom Accuracy: ", custom_metrics.accuracy(y_true, y_pred))
-#    print("Custom Accuracy V2: ", custom_metrics.accuracy_v2(y_true, y_pred))
-#    print("Sklearn Precision: ", metrics.precision_score(y_true, y_pred))
-#    print("Custom Precision: ", custom_metrics.precision(y_true, y_pred))
-#    print("Sklearn Recall: ", metrics.recall_score(y_true, y_pred))
-#    print("Custom Recall: ", custom_metrics.recall(y_true, y_pred))
-#    print("Custom F1: ", custom_metrics.f1(y_true, y_pred))
-#    print("Sklearn F1: ", metrics.f1_score(y_true, y_pred))
-#    print("Sklearn Log loss: ", metrics.log_loss(y_true, y_pred_proba))
-#    print("Custom Log loss: ", custom_metrics.log_loss(y_true, y_pred_proba))
+#    print("Sklearn r2: ", metrics.r2_score(y_true, y_pred_proba))
+#    print("Custom r2: ", custom_metrics.r2(y_true, y_pred_proba))
 
-# Multi-class ouputs, 3 classes.
-#    y_true = [0,1,1,2,2,2,0,0,0,1,1,1,1]
-#    y_pred = [1,0,1,2,2,1,2,1,1,1,0,2,0]
+#   Multi-class ouputs, 3 classes.
+#    y_true = [0,1,1,2,2,2,0,0,0,1,1,1,1,0,2,1,1,2]
+#    y_pred = [1,0,1,2,2,1,2,1,1,1,0,2,0,0,2,1,2,0]
 #
 #    print("Sklearn Macro-Averaged Precision: ", metrics.precision_score(y_true, y_pred, average="macro"))
 #    print("Custom Macro-Averaged Precision: ", custom_metrics.precision(y_true, y_pred, average="macro"))
-#    print("Sklearn Micro-Averaged Precision: ", metrics.precision_score(y_true, y_pred, average="micro"))
-#    print("Custom Micro-Averaged Precision: ", custom_metrics.precision(y_true, y_pred, average="micro"))
-#    print("Sklearn Weighted Precision: ", metrics.precision_score(y_true, y_pred, average="weighted"))
-#    print("Custom Weighted Precision: ", custom_metrics.precision(y_true, y_pred, average="weighted"))
-#
-#    print("Sklearn Macro-Averaged Recall: ", metrics.recall_score(y_true, y_pred, average="macro"))
-#    print("Custom Macro-Averaged Recall: ", custom_metrics.recall(y_true, y_pred, average="macro"))
-#    print("Sklearn Micro-Averaged Recall: ", metrics.recall_score(y_true, y_pred, average="micro"))
-#    print("Custom Micro-Averaged Recall: ", custom_metrics.recall(y_true, y_pred, average="micro"))
-#    print("Sklearn Weighted Recall: ", metrics.recall_score(y_true, y_pred, average="weighted"))
-#    print("Custom Weighted Recall: ", custom_metrics.recall(y_true, y_pred, average="weighted"))
-#
-#    print("Sklearn Macro-Averaged F1: ", metrics.f1_score(y_true, y_pred, average="macro"))
-#    print("Custom Macro-Averaged F1: ", custom_metrics.f1(y_true, y_pred, average="macro"))
-#    print("Sklearn Micro-Averaged F1: ", metrics.f1_score(y_true, y_pred, average="micro"))
-#    print("Custom Micro-Averaged F1: ", custom_metrics.f1(y_true, y_pred, average="micro"))
-#    print("Sklearn Weighted F1: ", metrics.f1_score(y_true, y_pred, average="weighted"))
-#    print("Custom Weighted F1: ", custom_metrics.f1(y_true, y_pred, average="weighted"))
-
 #    plot_confusion_matrix(y_true, y_pred)
+
+#   Multi Label case 5 unique labels in total.
+    y_true = [[2,1,3],[0,2],[1],[3,2],[1,0],[]]
+    y_pred = [[0,1,2],[1],[0,2,3],[2,3,4,0],[0,1,2],[0]]
+    print("MeanAvgPrec @k: ", multilabel_metrics.mean_avg_precision_at_k(y_true, y_pred, 4))
+
+
 
 
