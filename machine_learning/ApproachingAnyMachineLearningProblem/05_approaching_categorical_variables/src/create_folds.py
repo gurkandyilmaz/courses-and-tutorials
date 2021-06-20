@@ -8,6 +8,9 @@ import config
 def create_folds(input_file, target = "target", num_folds = 5):
     df = pd.read_csv(config.INPUT_DIR / input_file, index_col="id")
     
+    # Take half of the data. memory issues.
+    df = df.sample(frac=0.25).reset_index(drop=True)    
+    
     df["folds"] = None
     kf = StratifiedKFold(n_splits=num_folds, shuffle=True, random_state=12)
     for fold, (train_idx, val_idx) in enumerate(kf.split(X=df, y=df[target])):
