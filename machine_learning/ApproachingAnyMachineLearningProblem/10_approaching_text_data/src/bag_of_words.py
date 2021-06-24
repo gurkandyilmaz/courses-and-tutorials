@@ -14,17 +14,6 @@ import config
 def train(fold_id = 0, verbose = False):
     """Trains the classifier once by taking the fold_id for validation and the remaining folds for training."""
     df = pd.read_csv(config.INPUT_DIR / config.TRAIN_FILE)
-    df["sentiment"] = df["sentiment"].apply(lambda row: 1 if row=="positive" else 0)
-    
-    df["folds"] = -1
-
-    df = df.sample(frac=1.0).reset_index(drop=True)
-    features = df["review"]
-
-    kf = model_selection.StratifiedKFold(n_splits=5)
-    for fold, (train_idx, val_idx) in enumerate(kf.split(X=features, y=df["sentiment"])):
-        df.loc[val_idx, "folds"] = fold
-
     df_train = df.loc[df["folds"] != fold_id, :].reset_index(drop=True)
     df_validation = df.loc[df["folds"] == fold_id, :].reset_index(drop=True)
 
@@ -56,6 +45,5 @@ def train(fold_id = 0, verbose = False):
 
 if __name__ == "__main__":
     train(fold_id=0, verbose=True)
-
 
 
