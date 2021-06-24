@@ -27,6 +27,18 @@ def save_data_as_train_test(raw_data, train_ratio = 0.8):
     print(f"Test file shape: {df_test.shape}")
 
 
+def fold_data(csv_file, n_splits):
+    df = pd.read_csv(config.INPUT_DIR / csv_file)
+    #df["sentiment"] = df["sentiment"].apply(lambda label: 1 if label=="positive" else 0)
+    df["folds"] = -1
+    df = df.sample(frac=1.0).reset_index(drop=True)
+    kf = model_selection.StratifiedKFold(n_splits=n_splits)
+    for fold, (train_idx, val_idx) in enumerate(kf.split(X=df["review"], y=df["sentiment"])):
+        df.loc[val_idx, "folds"] = fold
+
+    df.to_csv(config.INPUT_DIR / csv_file, index=False)
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     
