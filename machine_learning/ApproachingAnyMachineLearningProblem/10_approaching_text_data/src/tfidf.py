@@ -3,6 +3,7 @@
 from time import time
 import pandas as pd
 import numpy as np
+import joblib
 from sklearn import naive_bayes
 from sklearn import linear_model, metrics
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -32,6 +33,7 @@ def train(fold_id = 0, verbose = False):
     
     t0 = time()
     tfidf_vec.fit(df_train["review"])
+    joblib.dump(tfidf_vec, config.SAVED_MODELS_DIR / "tfidf_vectorizer.pkl")
     t1 = time()
     
     features_train = tfidf_vec.transform(df_train["review"])
@@ -41,6 +43,7 @@ def train(fold_id = 0, verbose = False):
     #clf = linear_model.LogisticRegression()
     clf = naive_bayes.MultinomialNB()
     clf.fit(features_train, df_train["sentiment"])
+    joblib.dump(clf, config.SAVED_MODELS_DIR / "classifier_model.pkl")
     t3 = time()
 
     preds = clf.predict(features_validation)
