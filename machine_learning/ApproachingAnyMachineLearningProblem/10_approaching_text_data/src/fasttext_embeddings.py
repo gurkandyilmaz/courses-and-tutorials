@@ -68,7 +68,7 @@ def train():
 
     kf = model_selection.StratifiedKFold(n_splits=3)
     for fold, (train_idx, val_idx) in enumerate(kf.split(X=dfvectors, y=target)):
-        print("fFOLD: {fold}")
+        print(f"FOLD: {fold}")
         xtrain = vectors[train_idx, :]
         target_train = target[train_idx]
 
