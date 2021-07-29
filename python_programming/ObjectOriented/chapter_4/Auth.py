@@ -93,7 +93,9 @@ class Authorizor:
         else:
             if username not in self.authenticator.users:
                 raise InvalidUsername(username)
-            permitted_users.add(username)
+            if username not in permitted_users:
+                raise NotPermittedError(username)
+            return username in permitted_users
 
 authenticator = Authenticator()
 authorizor = Authorizor(authenticator)
