@@ -10,6 +10,9 @@ class BankAccount:
         self.observers = []
         self._name = None
         self._balance = None
+    
+    def add_observer(self, observer):
+        self.observers.append(observer)
 
     @property
     def name(self) -> str:
@@ -30,29 +33,30 @@ class BankAccount:
         self._update_observers()
     
     def _update_observers(self) -> None:
-        for observer in self.observers:
-            observer()
+        for obs in self.observers:
+            obs()
+            print(f"Name: {self.name} | Balance: {self.balance}")
+            print("-----------------")
     
 class Observer:
     """Observers will be updated if there is a change in the BankAccount"""
     count = 0
-    def __init__(self, account: BankAccount) -> None:
-        self.account = account
-        self.account.observers.append(self)
+    def __init__(self) -> None:
         self.observer_id = Observer.count + 1
         Observer.count += 1
 
     def __call__(self):
         print(f"Dear Observer {self.observer_id}, BankAccount updated!")
-        print(f"Name: {self.account.name} | Balance:{self.account.balance}")
-        print("--------------------")
+        #print(f"Name: {self.account.name} | Balance:{self.account.balance}")
 
 if __name__ == "__main__":
     account = BankAccount()
-    observer_1 = Observer(account)
+    observer_1 = Observer()
+    observer_2 = Observer()
+    
+    account.add_observer(observer_1)
+    account.add_observer(observer_2)
+
     account.name = "ING-Yenice-Vadeli"
-    observer_2 = Observer(account)
-    observer_3 = Observer(account)
-    #account.name = "Test name"
     account.balance = 1200
 
