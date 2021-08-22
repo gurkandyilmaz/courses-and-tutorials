@@ -1,3 +1,4 @@
+"""Simple usage of unittest module."""
 import sys
 import unittest
 from stats_list import StatsList
@@ -14,6 +15,8 @@ class TestValidInput(unittest.TestCase):
 
     def test_mode(self):
         self.assertEqual(self.stats.mode(), [2,5])
+        self.stats.append(6)
+        self.assertEqual(self.stats.mode(), [2,5,6])
     
     @unittest.expectedFailure
     def test_expected_failure(self):
