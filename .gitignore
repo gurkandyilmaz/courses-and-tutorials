@@ -1,3 +1,7 @@
+## General
+# config files
+.vim/
+
 ## Python
 #input and model files
 *.csv
