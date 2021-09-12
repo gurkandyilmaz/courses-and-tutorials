@@ -38,7 +38,7 @@ def loadLabelFile(label_file: Path) -> np.ndarray:
                 break
     return np.array(all_labels)
 
-def generate_images(images_array: np.ndarray, label: np.ndarray, save : bool=False) -> None:
+def generate_images(images_array: np.ndarray, label: np.ndarray=None, save : bool=False) -> None:
     """Shows a single image representing the digit number given in images_array."""
     image = np.reshape(images_array, (28, 28)) * 255
     image = image.astype(np.uint8)
