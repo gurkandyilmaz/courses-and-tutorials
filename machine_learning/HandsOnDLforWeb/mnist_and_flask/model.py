@@ -21,18 +21,18 @@ def cnn_model() -> keras.Model:
     input_layer = Input(shape=(28,28,1), name='input_layer')
     conv_1 = Conv2D(16, (2, 2), activation='relu', name='Conv_1')(input_layer)
     batch_norm_1 = BatchNormalization(axis=-1, name='BatchNorm_1')(conv_1)
-    conv_2 = Conv2D(8, (2, 2), activation='relu', name='Conv_2')(batch_norm_1)
+    conv_2 = Conv2D(16, (2, 2), activation='relu', name='Conv_2')(batch_norm_1)
     pooling_1 = MaxPooling2D(pool_size=(2, 2), name='Pooling_1')(conv_2)
     batch_norm_2 = BatchNormalization(axis=-1, name='BatchNorm_2')(pooling_1)
-    conv_3 = Conv2D(8, (2, 2), activation='relu', name='Conv_3')(batch_norm_2)
+    conv_3 = Conv2D(16, (2, 2), activation='relu', name='Conv_3')(batch_norm_2)
     batch_norm_3 = BatchNormalization(axis=-1, name='BatchNorm_3')(conv_3)
-    conv_4 = Conv2D(8, (2, 2), activation='relu', name='Conv_4')(batch_norm_3)
+    conv_4 = Conv2D(16, (2, 2), activation='relu', name='Conv_4')(batch_norm_3)
     pooling_2 = MaxPooling2D(pool_size=(2, 2), name='Pooling_2')(conv_4)
     flatten = Flatten()(pooling_2)
     batch_norm_4 = BatchNormalization(axis=-1, name='BatchNorm_4')(flatten)
-    dense_1 = Dense(8, activation='relu', name='Dense_1')(batch_norm_4)
+    dense_1 = Dense(32, activation='relu', name='Dense_1')(batch_norm_4)
     batch_norm_5 = BatchNormalization(axis=-1, name='BatchNorm_5')(dense_1)
-    dropout_1 = Dropout(0.2)(batch_norm_5)
+    dropout_1 = Dropout(0.4)(batch_norm_5)
     out = Dense(10, activation='softmax')(dropout_1)
 
     model = keras.Model(inputs=input_layer, outputs=out, name='cnn_model')
@@ -83,13 +83,13 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         LOGGER.info('Train interrupted from the keyboard.')
 
-    LOGGER.info(f'Model fitted with params: {model.get_config()}')
+    LOGGER.debug(f'Model fitted with params: {model.get_config()}')
 
     test_score = model.evaluate(test_data, test_labels)
     LOGGER.debug(f'Evaluation Score for the model: {test_score}')
 
     model.save(MNIST.SAVED_MODELS / 'cnn_model.model')
-    LOGGER.info(f'Model saved into {MNIST.SAVED_MODELS}')
+    LOGGER.debug(f'Model saved into {MNIST.SAVED_MODELS}')
     # alternative saving
     model_json = model.to_json()
     with open(MNIST.SAVED_MODELS / 'model.json', 'w') as f:

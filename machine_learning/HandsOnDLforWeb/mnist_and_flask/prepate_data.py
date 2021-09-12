@@ -1,9 +1,11 @@
 from pathlib import Path
+from datetime import datetime
+import time
 
 import numpy as np
 import matplotlib.pyplot as plt
 
-from config import MNIST
+from config import MNIST, APP
 
 def loadImageFile(image_file: Path) -> np.ndarray:
     """Loads the content of MNIST image file into a list."""
@@ -36,20 +38,31 @@ def loadLabelFile(label_file: Path) -> np.ndarray:
                 break
     return np.array(all_labels)
 
-def generate_images(images_array: np.ndarray) -> None:
+def generate_images(images_array: np.ndarray, label: np.ndarray, save : bool=False) -> None:
     """Shows a single image representing the digit number given in images_array."""
-    image = images_array.reshape(28, 28).astype(np.uint8)
-    image *= 255
+    image = np.reshape(images_array, (28, 28)) * 255
+    image = image.astype(np.uint8)
+    plt.axis('off')
     plt.imshow(image, interpolation='nearest', cmap='gray')
-    plt.show()
+    #plt.show()
+    if save:
+        label = np.where(label == 1)[0][0]
+        time.sleep(1) 
+        now = datetime.now().strftime('%H%M%S')
+        image_filename = f'image_{now}_{label}.png'
+        plt.imsave(fname=APP.MEDIA/image_filename, arr=image, cmap='gray_r', format='png')
     return
     
 if __name__ == "__main__":
+    idx = 2
     test_data = MNIST.TEST_DATA_FILE
     test_label = MNIST.TEST_LABELS_FILE
-    all_images = loadImageFile(test_data)
-    all_labels = loadLabelFile(test_label)
-    print(all_images[0].shape)
-    print(all_labels[0], all_labels.shape)
-    #generate_images(all_images[0])
+    test_images = loadImageFile(test_data)
+    test_labels = loadLabelFile(test_label)
+    print(test_images[idx].shape, test_labels)
+    print(test_labels[idx])
+    ids = np.random.choice(test_labels.shape[0], 20)
+    for idx in ids:
+        generate_images(test_images[idx], test_labels[idx], save=True)
+
 
