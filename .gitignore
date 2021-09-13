@@ -1,4 +1,5 @@
 ## General
+/Datasets
 # config files
 .vim/
 
@@ -21,7 +22,7 @@ __pycache__/
 profile_default/
 ipython_config.py
 
-# Environments
+# Environments / logs
 .env
 .venv
 env/
@@ -29,7 +30,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-
+*.log
 ## Python END
 
 ## C/C++

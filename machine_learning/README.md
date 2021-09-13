@@ -6,5 +6,8 @@ This Repository includes the codes for the exercises related to Machine Learning
 
 - [Approaching Any Machine Learning Problem](https://github.com/gurkandyilmaz/courses-and-tutorials/tree/master/machine_learning/ApproachingAnyMachineLearningProblem)
 - [Learning Data Mining with Python](https://github.com/gurkandyilmaz/courses-and-tutorials/tree/master/machine_learning/LearningDataMiningwithPython)
+- [Hands-On Deep Learning for the Web](https://github.com/gurkandyilmaz/courses-and-tutorials/tree/master/machine_learning/HandsOnDLforWeb)
+
+
 
 
