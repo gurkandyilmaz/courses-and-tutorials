@@ -35,5 +35,5 @@ handlers:
         encoding: utf-8
 root:
     level: DEBUG
-    handlers: [console, debug_file]
+    handlers: [console, debug_file, info_file]
     
