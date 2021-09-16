@@ -6,7 +6,8 @@ load_dotenv(find_dotenv())
 
 DATASETS_DIR = Path(os.getenv('DATASETS_DIR'))
 ROOT_DIR = Path(os.getenv('ROOT_DIR'))
-REVIEWS_CSV = Path(os.getenv('AMAZON_REVIEWS_CSV'))
+AMAZON_REVIEWS_CSV = Path(os.getenv('AMAZON_REVIEWS_CSV'))
+LOGGER_CONFIGS_FILE = os.getenv('LOGGER_CONFIGS_FILE')
 
 if __name__ == "__main__":
     print(os.getenv('DATASETS_DIR'))
