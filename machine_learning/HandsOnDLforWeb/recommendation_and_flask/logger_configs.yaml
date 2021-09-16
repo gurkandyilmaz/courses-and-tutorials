@@ -1,0 +1,31 @@
+#Configs for Logger.py module. Outputs can be directed to any of the 
+#handlers. Every handler has its own log level. 
+#New handlers can be created, available ones can be modified. 
+
+version = 1.0
+disable_existing_loggers = False
+formatters:
+    long_description:
+        format: '%(asctime)s - %(name)s - %(levelname)s - %(module)s - Line %(lineno)s: %(message)s' 
+        datefmt: '%d-%b-%y %H:%M:%S'
+    short_description:
+        format: '$(asctime)s - %(name)s - %(levelname)s - %(message)s'
+        datefmt: '%d-%b-%y %H:%M:%S'
+handlers:
+    console:
+        class: logging.StreamHandler
+        level: ERROR
+        formatter: short_description
+        stream: ext://sys.stdout
+    debug_file:
+        class: logging.RotatingFileHandler
+        level: DEBUG
+        formatter: long_description
+        filename: debug_logs.log
+        maxBytes: 10485760 #10MB
+        mode: a
+        encoding: utf-8
+root:
+    level: DEBUG
+    handlers: [console, debug_file]
+
