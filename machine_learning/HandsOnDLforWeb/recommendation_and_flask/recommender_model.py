@@ -57,59 +57,68 @@ def matrix_factorization(Ratings: pd.DataFrame, U: pd.DataFrame, P: pd.DataFrame
     LOGGER.debug(f'factorization done. step: {step}, error: {error}, e: {e:7f}')
     return U, P
 
-def save_as_pickle(filename: str, obj: Any) -> None:
-    with open(filename, 'wb') as f:
+def save_as_pickle(path: str, obj: Any) -> None:
+    with open(path, 'wb') as f:
         pickle.dump(obj, f)
 
-    LOGGER.info(f'Pickle file written in {filename}')
+    LOGGER.info(f'Pickle file written in {path}')
 
-df = pd.read_csv(AMAZON_REVIEWS_CSV, encoding = 'ISO-8859-1', nrows = 10000,
+def load_pickle(path: str) -> Any:
+    with open(path, 'rb') as f:
+        model = pickle.load(f)
+    LOGGER.info(f'{model} loaded.')
+    return model
+
+
+if __name__ == '__main__':
+
+    df = pd.read_csv(AMAZON_REVIEWS_CSV, encoding = 'ISO-8859-1', nrows = 10000,
                 usecols = ['ProductId', 'UserId', 'Score', 'Text'])
-LOGGER.debug(f'Dataframe read with having shape: {df.shape} columns: {df.columns}')
+    LOGGER.debug(f'Dataframe read with having shape: {df.shape} columns: {df.columns}')
 
-t0 = time.time()
-df.loc[:, 'Text'] = df.loc[:, 'Text'].apply(clean_text)
-t1 = time.time()
+    t0 = time.time()
+    df.loc[:, 'Text'] = df.loc[:, 'Text'].apply(clean_text)
+    t1 = time.time()
 
-LOGGER.info(f'df["Text"].apply(clean_text) elapsed time: {t1-t0:.5f} sec.')
+    LOGGER.info(f'df["Text"].apply(clean_text) elapsed time: {t1-t0:.5f} sec.')
 
-x_train, x_test, y_train, y_test = train_test_split(df['Text'], df['ProductId'],
+    x_train, x_test, y_train, y_test = train_test_split(df['Text'], df['ProductId'],
                                                     test_size=0.25, 
                                                     random_state=12)
 
-user_df = df.loc[:, ['UserId','Text']].copy()
-user_df = user_df.groupby(by='UserId').agg({'Text': ' '.join})
-product_df = df.loc[:, ['ProductId', 'Text']].copy()
-product_df = product_df.groupby(by='ProductId').agg({'Text': ' '.join})
+    user_df = df.loc[:, ['UserId','Text']].copy()
+    user_df = user_df.groupby(by='UserId').agg({'Text': ' '.join})
+    product_df = df.loc[:, ['ProductId', 'Text']].copy()
+    product_df = product_df.groupby(by='ProductId').agg({'Text': ' '.join})
 
-LOGGER.debug(f'user_df shape: {user_df.shape} columns: {user_df.columns}')
-LOGGER.debug(f'product_df shape: {product_df.shape} columns: {product_df.columns}')
+    LOGGER.debug(f'user_df shape: {user_df.shape} columns: {user_df.columns}')
+    LOGGER.debug(f'product_df shape: {product_df.shape} columns: {product_df.columns}')
 
-user_vectorizer = TfidfVectorizer(tokenizer=WordPunctTokenizer().tokenize,
+    user_vectorizer = TfidfVectorizer(tokenizer=WordPunctTokenizer().tokenize,
                                 max_features = 1000)
-user_vectors = user_vectorizer.fit_transform(user_df['Text'])
-LOGGER.debug(f'user tfidf vectors having shape: {user_vectors.shape}')
+    user_vectors = user_vectorizer.fit_transform(user_df['Text'])
+    LOGGER.debug(f'user tfidf vectors having shape: {user_vectors.shape}')
 
-product_vectorizer = TfidfVectorizer(tokenizer=WordPunctTokenizer().tokenize,
+    product_vectorizer = TfidfVectorizer(tokenizer=WordPunctTokenizer().tokenize,
                                 max_features = 1000)
-product_vectors = product_vectorizer.fit_transform(product_df['Text'])
-LOGGER.debug(f'product tfidf vectors having shape: {product_vectors.shape}')
+    product_vectors = product_vectorizer.fit_transform(product_df['Text'])
+    LOGGER.debug(f'product tfidf vectors having shape: {product_vectors.shape}')
 
-user_ratings = pd.pivot_table(df, values = 'Score', index = ['UserId'], 
+    user_ratings = pd.pivot_table(df, values = 'Score', index = ['UserId'], 
                             columns = ['ProductId'])
-LOGGER.info(f'user_ratings shape: {user_ratings.shape} type: {type(user_ratings)}')
+    LOGGER.info(f'user_ratings shape: {user_ratings.shape} type: {type(user_ratings)}')
 
-U = pd.DataFrame(user_vectors.toarray(), index = user_df.index, 
+    U = pd.DataFrame(user_vectors.toarray(), index = user_df.index, 
                 columns = user_vectorizer.get_feature_names())
 
-P = pd.DataFrame(product_vectors.toarray(), index = product_df.index, 
+    P = pd.DataFrame(product_vectors.toarray(), index = product_df.index, 
                 columns = product_vectorizer.get_feature_names())
 
-t0 = time.time()
-U, P = matrix_factorization(user_ratings, U, P)
-t1 = time.time()
-LOGGER.info(f'matrix_factorization done in {t1-t0:.5f} secs.')
+    t0 = time.time()
+    U, P = matrix_factorization(user_ratings, U, P)
+    t1 = time.time()
+    LOGGER.info(f'matrix_factorization done in {t1-t0:.5f} secs.')
 
-save_as_pickle('./pickled_models/user_weights.pkl', U)
-save_as_pickle('./pickled_models/product_weights.pkl', P)
-save_as_pickle('./pickled_models/user_vectorizer.pkl', user_vectorizer)
+    save_as_pickle('./pickled_models/user_weights.pkl', U)
+    save_as_pickle('./pickled_models/product_weights.pkl', P)
+    save_as_pickle('./pickled_models/user_vectorizer.pkl', user_vectorizer)

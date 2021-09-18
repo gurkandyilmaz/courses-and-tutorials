@@ -14,14 +14,14 @@ formatters:
 handlers:
     console:
         class: logging.StreamHandler
-        level: ERROR
+        level: DEBUG
         formatter: short_description
         stream: ext://sys.stdout
     debug_file:
         class: logging.handlers.RotatingFileHandler
         level: DEBUG
         formatter: long_description
-        filename: ./logs/debug_logs.log
+        filename: ./recommendation_and_flask/logs/debug_logs.log
         maxBytes: 10485760 #10MB
         mode: a
         encoding: utf-8
