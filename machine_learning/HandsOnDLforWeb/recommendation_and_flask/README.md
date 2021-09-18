@@ -5,7 +5,7 @@ factorization on Amazon food review dataset.**
 ```
 HandsOnDLforWeb $: conda create --name sample_env --file=conda_requirements.txt 
 ```
---
+
 - Activate the environment and Run the app by typing the following command in the terminal:
 
 ```
