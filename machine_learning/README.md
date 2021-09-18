@@ -1,6 +1,7 @@
-# Machine Learning Books
+# Machine Learning Sources
 
-This Repository includes the codes for the exercises related to Machine Learning books. <br /><br />
+This Repository includes the codes for the exercises related to Machine Learning books. 
+Also, the jupyter notebook examples for various topics.<br /><br />
 
 >List of Books:
 
