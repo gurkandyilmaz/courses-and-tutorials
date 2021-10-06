@@ -68,7 +68,6 @@ def create_model(lr: float, features: List) -> tf.keras.Model:
     """Creates a simple model by using the functioanl API of keras."""
     feature_cols, input_layers = feature_crossing(features, housing_df)
     feature_layer = tf.keras.layers.DenseFeatures(feature_cols)
-    print(input_layers, feature_cols)
     feature_layer_out = feature_layer(input_layers)
     output = tf.keras.layers.Dense(units = 1, name = 'output')(feature_layer_out)
     
@@ -114,10 +113,9 @@ if __name__ == "__main__":
     housing_dataset_path = os.getenv('CALIFORNIA_HOUSING_CSV')
     housing_df = pd.read_csv(housing_dataset_path)
     housing_df['median_house_value'] /= SCALING_FACTOR
-    print(housing_df.shape)
     
     regressor = create_model(lr = 0.001, features = FEATURE_LIST)
-    print(regressor.summary())
+    #print(regressor.summary())
     history = train_model(
         regressor, 
         housing_df, 
@@ -132,8 +130,3 @@ if __name__ == "__main__":
         model = regressor,
         show_shapes = True
     )
-
-
-
-
-
