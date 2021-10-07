@@ -19,10 +19,10 @@ tf.keras.backend.set_floatx('float32')
 
 DATASET_PATH = os.getenv('CALIFORNIA_HOUSING_CSV')
 TARGET_THRESHOLD = 265000 # convert prices into binary labels either 0 or 1
-EPOCHS = 15
+EPOCHS = 20
 LEARNING_RATE = 0.001
 BATCH_SIZE = 128
-PREDICT_THRESHOLD = 0.35
+PREDICT_THRESHOLD = 0.15
 
 
 def create_model(lr: float, threshold_for_predict: float) -> tf.keras.Model:
@@ -34,10 +34,15 @@ def create_model(lr: float, threshold_for_predict: float) -> tf.keras.Model:
     model.compile(
         optimizer = tf.keras.optimizers.RMSprop(learning_rate = lr),
         loss = tf.keras.losses.BinaryCrossentropy(),
-        metrics = [tf.metrics.BinaryAccuracy(threshold = threshold_for_predict)]
+        metrics = [
+            tf.metrics.BinaryAccuracy(threshold = threshold_for_predict),
+            tf.metrics.Precision(thresholds = threshold_for_predict),
+            tf.metrics.Recall(thresholds = threshold_for_predict)
+        ]
     )
 
     return model
+
 
 def train_model(model: tf.keras.Model, x: np.ndarray, y : np.ndarray,
         epochs: int, batch_size : int) -> tf.keras.callbacks.History:
@@ -47,6 +52,7 @@ def train_model(model: tf.keras.Model, x: np.ndarray, y : np.ndarray,
     )
 
     return history
+
 
 def plot_loss_curve(history: Dict) -> None:
     """
@@ -58,11 +64,15 @@ def plot_loss_curve(history: Dict) -> None:
     loss_validation = history.history.get('val_loss')
     accuracy_train = history.history.get('binary_accuracy')
     accuracy_val = history.history.get('val_binary_accuracy')
+    precision_train = history.history.get('precision')
+    precision_val = history.history.get('val_precision')
+    recall_train = history.history.get('recall')
+    recall_val = history.history.get('val_recall')
 
-    plt.figure(figsize = (12, 6))
+    plt.figure(figsize = (15, 6))
     plt.suptitle('Classifier Metrics')
 
-    plt.subplot(1,2,1)
+    plt.subplot(2,2,1)
     plt.xlabel('Epoch')
     plt.ylabel('Loss')
     plt.plot(epochs, loss_train, label = 'Train loss')
@@ -70,11 +80,27 @@ def plot_loss_curve(history: Dict) -> None:
     plt.legend()
     plt.grid()
 
-    plt.subplot(1,2,2)
+    plt.subplot(2,2,2)
     plt.xlabel('Epoch')
     plt.ylabel('Accuracy')
     plt.plot(epochs, accuracy_train, label = 'Train Accuracy')
     plt.plot(epochs, accuracy_val, label = 'Validation Accuracy')
+    plt.legend()
+    plt.grid()
+
+    plt.subplot(2,2,3)
+    plt.xlabel('Epoch')
+    plt.ylabel('Precision')
+    plt.plot(epochs, precision_train, label = 'Train Precision')
+    plt.plot(epochs, precision_val, label = 'Validation Precision')
+    plt.legend()
+    plt.grid()
+
+    plt.subplot(2,2,4)
+    plt.xlabel('Epoch')
+    plt.ylabel('Recall')
+    plt.plot(epochs, recall_train, label = 'Train Recall')
+    plt.plot(epochs, recall_val, label = 'Validation Recall')
     plt.legend()
     plt.grid()
 
@@ -108,6 +134,7 @@ if __name__ == "__main__":
             BATCH_SIZE
     )
     plot_loss_curve(hist)
-    print(classifier.evaluate(x = features_test, y = target_test, 
-        batch_size = BATCH_SIZE)
+    classifier.evaluate(x = features_test, y = target_test, 
+            batch_size = BATCH_SIZE
     )
+    
