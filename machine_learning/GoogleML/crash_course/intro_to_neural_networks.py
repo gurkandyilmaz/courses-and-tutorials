@@ -40,6 +40,7 @@ def create_feature_layer(
 
 
 def create_model(lr: float) -> tf.keras.Model:
+    """Creates an NN containing two hidden layers and l2 regularization."""
     inputs, feature_list = create_feature_layer(features = SELECTED_FEATURES)
     feature_layer = tf.keras.layers.DenseFeatures(feature_list)
     feature_layer_out = feature_layer(inputs)
@@ -71,7 +72,13 @@ def create_model(lr: float) -> tf.keras.Model:
 
     return model
 
-def train_model(model, dataset, epochs, batch_size, label_name):
+def train_model(
+        model:tf.keras.Model,
+        dataset: pd.DataFrame,
+        epochs: int,
+        batch_size: int,
+        label_name: str) -> tf.keras.callbacks.History:
+    """Trains the given model on the dataset."""
     features = {name: np.array(value) for name, value in dataset.items()}
     label = np.array(features.pop(label_name))
     history = model.fit(
@@ -106,6 +113,7 @@ if __name__ == "__main__":
     housing_df_normalized.dropna(subset = SELECTED_FEATURES, inplace = True)
     train_df = housing_df_normalized.iloc[:16000, :]
     test_df = housing_df_normalized.iloc[16000:, :]
+
     model = create_model(lr = LEARNING_RATE)
     history = train_model(model, train_df, EPOCHS, BATCH_SIZE, LABEL_NAME)
     plot_loss_curves(history)
