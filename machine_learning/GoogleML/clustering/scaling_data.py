@@ -4,7 +4,7 @@ normalization by z-score, and quantile transformation."""
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-
+from scipy.stats import stats
 
 def create_dummy_df(samples: int = 10) -> pd.DataFrame:
     """
@@ -19,7 +19,7 @@ def create_dummy_df(samples: int = 10) -> pd.DataFrame:
     feature_4 = random_number_gen.beta(1.5, 4.6, size = samples)
 
     features = {
-        'random_int': feature_1,
+        'randint': feature_1,
         'power': feature_2,
         'randn': feature_3,
         'beta': feature_4
@@ -29,11 +29,19 @@ def create_dummy_df(samples: int = 10) -> pd.DataFrame:
     
     return df
 
+def transform_values(values, mode : str) -> np.array:
+    if mode == 'zscore':
+        return stats.zscore(values)
+    elif mode == 'log':
+        return np.log(values)
+    elif mode == 'quantile':
+        pass
+
 def plot_hist(df: pd.DataFrame, columns: list) -> None:
-    plt.figure(figsize = (12, 8))
+    plt.figure(figsize = (16, 8))
     plt.suptitle('Feature Distributions.')
     for idx, col in enumerate(columns, start = 1):
-        plt.subplot(2, 2, idx)
+        plt.subplot(2, 4, idx)
         plt.title(col)
         plt.hist(df[col])
 
@@ -42,6 +50,12 @@ def plot_hist(df: pd.DataFrame, columns: list) -> None:
 
 if __name__ == "__main__":
     df = create_dummy_df(samples = 1000)
+    df['normalized_randn']=transform_values(df['randn'], mode = 'zscore')
+    df['log_power'] = transform_values(df['power'], mode = 'log')
+    df['normalized_beta'] = transform_values(df['beta'], mode = 'zscore')
+    df['log_beta'] = transform_values(df['beta'], mode = 'log')
+    print(df.head(3))
+    print(df.describe())
     plot_hist(df, df.columns)
 
 
