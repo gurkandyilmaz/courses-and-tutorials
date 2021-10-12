@@ -9,7 +9,7 @@ A collection of the codes written for the courses taken or for the exercises fro
 >Books
 
 - [C-C++ Books](https://github.com/gurkandyilmaz/courses-and-tutorials/tree/master/c-cplusplus-exercises) <br/><br/> 
-- [Machine Learning Books](https://github.com/gurkandyilmaz/courses-and-tutorials/tree/master/machine_learning) <br/><br/> 
-- [Python Programming Books](https://github.com/gurkandyilmaz/courses-and-tutorials/tree/master/python_programming) <br/><br/>
+- [Machine Learning](https://github.com/gurkandyilmaz/courses-and-tutorials/tree/master/machine_learning) <br/><br/> 
+- [Python Programming](https://github.com/gurkandyilmaz/courses-and-tutorials/tree/master/python_programming) <br/><br/>
 
 
