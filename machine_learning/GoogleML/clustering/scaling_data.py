@@ -13,13 +13,13 @@ def create_dummy_df(samples: int = 10) -> pd.DataFrame:
     """
     random_number_gen = np.random.RandomState(12)
     
-    feature_1 = random_number_gen.randint(low = 10000, high = 15000, size = samples)
+    feature_1 = 10000 * random_number_gen.binomial(n = 5, p = 0.3, size = samples)
     feature_2 = 750 * random_number_gen.power(3, size = samples)
     feature_3 = 55 * random_number_gen.randn(samples)
     feature_4 = random_number_gen.beta(1.5, 4.6, size = samples)
 
     features = {
-        'randint': feature_1,
+        'binomial': feature_1,
         'power': feature_2,
         'randn': feature_3,
         'beta': feature_4
@@ -29,13 +29,13 @@ def create_dummy_df(samples: int = 10) -> pd.DataFrame:
     
     return df
 
-def transform_values(values, mode : str) -> np.array:
+def transform_values(values: np.array, mode : str) -> np.array:
     if mode == 'zscore':
         return stats.zscore(values)
     elif mode == 'log':
-        return np.log(values)
+        return np.log(1 + values)
     elif mode == 'quantile':
-        pass
+        return pd.qcut(values, q = 4, labels = range(1,5))
 
 def plot_hist(df: pd.DataFrame, columns: list) -> None:
     plt.figure(figsize = (16, 8))
@@ -50,12 +50,11 @@ def plot_hist(df: pd.DataFrame, columns: list) -> None:
 
 if __name__ == "__main__":
     df = create_dummy_df(samples = 1000)
-    df['normalized_randn']=transform_values(df['randn'], mode = 'zscore')
-    df['log_power'] = transform_values(df['power'], mode = 'log')
-    df['normalized_beta'] = transform_values(df['beta'], mode = 'zscore')
-    df['log_beta'] = transform_values(df['beta'], mode = 'log')
     print(df.head(3))
-    print(df.describe())
+    df['quantiled_randn']=transform_values(df['randn'], mode = 'quantile')
+    df['log_power'] = transform_values(df['power'], mode = 'log')
+    df['normalized_binomial'] = transform_values(df['binomial'], mode = 'zscore')
+    df['log_binomial'] = transform_values(df['binomial'], mode = 'log')
     plot_hist(df, df.columns)
 
 
